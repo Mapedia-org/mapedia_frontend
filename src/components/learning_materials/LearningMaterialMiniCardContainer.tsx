@@ -2,7 +2,7 @@ import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Center, Flex, Heading, LinkBox, LinkOverlay, Stack } from '@chakra-ui/react';
 import { PageInfo } from '../../pages/PageInfo';
 import { LearningPathMiniCardDataFragment } from '../learning_paths/LearningPathMiniCard.generated';
-import { ResourceUrlLinkWrapper } from '../resources/elements/ResourceUrl';
+import { ResourceUrlLinkWrapper } from '../resources/elements/ResourceUrlLink';
 import { ResourceMiniCardDataFragment } from '../resources/ResourceMiniCard.generated';
 import { LearningMaterialRecommendButton } from './LearningMaterialRecommendButton';
 import { LearningMaterialType } from './LearningMaterialTypeBadge';

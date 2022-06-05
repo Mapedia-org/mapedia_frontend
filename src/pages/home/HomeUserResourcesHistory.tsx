@@ -7,7 +7,7 @@ import { LearningMaterialTypeIcon } from '../../components/learning_materials/Le
 import { BoxBlockDefaultClickPropagation } from '../../components/lib/BoxBlockDefaultClickPropagation';
 import { DurationViewer } from '../../components/resources/elements/Duration';
 import { ResourceCompletedCheckbox } from '../../components/resources/elements/ResourceCompletedCheckbox';
-import { ResourceUrlLink } from '../../components/resources/elements/ResourceUrl';
+import { ResourceUrlLink } from '../../components/resources/elements/ResourceUrlLink';
 import { LearningMaterialPreviewCardList } from '../../components/resources/LearningMaterialPreviewCardList';
 import { ResourceMiniCardDataFragment } from '../../components/resources/ResourceMiniCard.generated';
 import { ResourceLinkData } from '../../graphql/resources/resources.fragments';

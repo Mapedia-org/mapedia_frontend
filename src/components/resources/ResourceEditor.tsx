@@ -46,7 +46,7 @@ import { DeleteButtonWithConfirmation } from '../lib/buttons/DeleteButtonWithCon
 import { CollapsedField } from '../lib/fields/CollapsedField';
 import { Field } from '../lib/fields/Field';
 import { FormTitle } from '../lib/Typography';
-import { ResourceUrlInput, useAnalyzeResourceUrl } from './elements/ResourceUrl';
+import { ResourceUrlInput, useAnalyzeResourceUrl } from './elements/ResourceUrlInput';
 import { LearningMaterialDurationField } from './fields/LearningMaterialDurationField';
 import { LearningMaterialTagsField } from './fields/LearningMaterialTagsField';
 import { ResourceCoveredSubTopicsField } from './fields/ResourceCoveredSubTopicsField';

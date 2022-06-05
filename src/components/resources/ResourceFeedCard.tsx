@@ -11,7 +11,7 @@ import { BoxBlockDefaultClickPropagation } from '../lib/BoxBlockDefaultClickProp
 import { DurationViewer } from './elements/Duration';
 import { ResourceCompletedCheckbox } from './elements/ResourceCompletedCheckbox';
 import { LearningMaterialDescription } from '../learning_materials/LearningMaterialDescription';
-import { ResourceUrlLinkViewer, ResourceUrlLinkWrapper } from './elements/ResourceUrl';
+import { ResourceUrlLinkViewer, ResourceUrlLinkWrapper } from './elements/ResourceUrlLink';
 import { ResourceYoutubePlayer } from './elements/ResourceYoutubePlayer';
 import { LearningMaterialTypeBadge } from '../learning_materials/LearningMaterialTypeBadge';
 

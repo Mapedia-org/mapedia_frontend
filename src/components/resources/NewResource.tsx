@@ -46,7 +46,7 @@ import { useSuccessfulCreationToast } from '../lib/Toasts/SuccessfulCreationToas
 import { FormTitle } from '../lib/Typography';
 import { TopicBadge } from '../topics/TopicBadge';
 import { DurationViewer } from './elements/Duration';
-import { ResourceUrlInput, useAnalyzeResourceUrl } from './elements/ResourceUrl';
+import { ResourceUrlInput, useAnalyzeResourceUrl } from './elements/ResourceUrlInput';
 import { LearningMaterialDurationField } from './fields/LearningMaterialDurationField';
 import { LearningMaterialTagsField } from './fields/LearningMaterialTagsField';
 import { ResourceCoveredSubTopicsField } from './fields/ResourceCoveredSubTopicsField';

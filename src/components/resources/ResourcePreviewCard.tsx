@@ -41,7 +41,7 @@ import { ResourceSeriesIcon } from '../lib/icons/ResourceSeriesIcon';
 import { PageLink } from '../navigation/InternalLink';
 import { DurationViewer } from './elements/Duration';
 import { ResourceCompletedCheckbox } from './elements/ResourceCompletedCheckbox';
-import { ResourceUrlLinkViewer, ResourceUrlLinkWrapper } from './elements/ResourceUrl';
+import { ResourceUrlLinkViewer, ResourceUrlLinkWrapper } from './elements/ResourceUrlLink';
 import { ResourceYoutubePlayer } from './elements/ResourceYoutubePlayer';
 
 interface ResourcePreviewCardProps {

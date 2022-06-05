@@ -8,7 +8,7 @@ import { LearningMaterialRecommendButton } from '../learning_materials/LearningM
 import { LearningMaterialTypeIcon } from '../learning_materials/LearningMaterialTypeBadge';
 import { BoxBlockDefaultClickPropagation } from '../lib/BoxBlockDefaultClickPropagation';
 import { DeleteButtonWithConfirmation } from '../lib/buttons/DeleteButtonWithConfirmation';
-import { ResourceUrlLinkViewer, ResourceUrlLinkWrapper } from './elements/ResourceUrl';
+import { ResourceUrlLinkViewer, ResourceUrlLinkWrapper } from './elements/ResourceUrlLink';
 import { SquareResourceCardDataFragment } from './SquareResourceCard.generated';
 
 export const SquareResourceCardData = gql`

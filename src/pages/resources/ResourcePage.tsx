@@ -38,7 +38,7 @@ import { DeleteButtonWithConfirmation } from '../../components/lib/buttons/Delet
 import { ShowedInTopicLink, SocialWidgetsLabelStyleProps } from '../../components/lib/Typography';
 import { DurationViewer } from '../../components/resources/elements/Duration';
 import { ResourceCompletedCheckbox } from '../../components/resources/elements/ResourceCompletedCheckbox';
-import { ResourceUrlLink } from '../../components/resources/elements/ResourceUrl';
+import { ResourceUrlLink } from '../../components/resources/elements/ResourceUrlLink';
 import { ResourceYoutubePlayer } from '../../components/resources/elements/ResourceYoutubePlayer';
 import { ResourceMiniCard, ResourceMiniCardData } from '../../components/resources/ResourceMiniCard';
 import { ResourceMiniCardDataFragment } from '../../components/resources/ResourceMiniCard.generated';

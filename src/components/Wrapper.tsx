@@ -9,6 +9,7 @@ import { UnauthentificatedModalProvider } from './auth/UnauthentificatedModal';
 import 'react-sortable-tree/style.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { env } from '../env';
+import { ResourceViewerModalProvider } from './resources/elements/ResourceViewerModal';
 
 interface WrapperProps {
   apolloClient: ApolloClient<NormalizedCacheObject>;
@@ -21,7 +22,9 @@ export const Wrapper: React.FC<WrapperProps> = ({ children, apolloClient }) => {
         <ChakraProvider resetCSS theme={theme}>
           <DefaultSeo title="Mapedia.org" />
           <UnauthentificatedModalProvider>
-            <Layout>{children}</Layout>
+            <ResourceViewerModalProvider>
+              <Layout>{children}</Layout>
+            </ResourceViewerModalProvider>
           </UnauthentificatedModalProvider>
           <style global jsx>
             {`

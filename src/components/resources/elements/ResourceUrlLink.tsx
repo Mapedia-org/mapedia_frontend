@@ -1,10 +1,11 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { Link, LinkProps, Skeleton, Text, TextProps } from '@chakra-ui/react';
+import { Link, LinkProps, Skeleton, Text, TextProps, useDisclosure } from '@chakra-ui/react';
 import gql from 'graphql-tag';
 import { useSetResourceOpenedMutation } from '../../../graphql/resources/resources.operations.generated';
 import { useCurrentUser } from '../../../graphql/users/users.hooks';
 import { toUrlPreview } from '../../../services/url.service';
 import { ResourceUrlDataFragment } from './ResourceUrlLink.generated';
+import { useResourceViewerModal } from './ResourceViewerModal';
 
 export const ResourceUrlData = gql`
   fragment ResourceUrlData on Resource {
@@ -18,6 +19,13 @@ export const ResourceUrlData = gql`
   }
 `;
 
+// const useResourceViewerModal = (resource: ResourceUrlDataFragment) => {
+//   const {isOpen, onOpen, onClose} = useDisclosure()
+//   return {
+//     openResourceModal
+//   }
+// }
+
 export const ResourceUrlLinkWrapper: React.FC<
   {
     resource: ResourceUrlDataFragment;
@@ -26,15 +34,19 @@ export const ResourceUrlLinkWrapper: React.FC<
 > = ({ resource, isLoading, children, ...linkProps }) => {
   const [setResourceOpened] = useSetResourceOpenedMutation({ variables: { resourceId: resource._id } });
   const { currentUser } = useCurrentUser();
+
+  const { openResourceViewerModal } = useResourceViewerModal();
   return (
     <Skeleton isLoaded={!isLoading} as="span">
       <Link
         {...linkProps}
-        href={resource.url}
+        // href={resource.url}
         onClick={() => {
+          openResourceViewerModal(resource);
           !!currentUser && setResourceOpened();
         }}
-        isExternal
+
+        // isExternal
       >
         {children}
       </Link>

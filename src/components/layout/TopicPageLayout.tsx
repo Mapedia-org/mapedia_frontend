@@ -29,7 +29,7 @@ export const TopicPageLayout: React.FC<TopicPageLayoutProps> = ({
     <BasePageLayout
       marginSize="md"
       renderHeader={(layoutProps) => (
-        <Flex w="100%" direction="column" alignItems="stretch" position="relative">
+        <Flex direction="column" alignItems="stretch" position="relative">
           <Flex w="100%" direction="row" justifyContent="space-between" px={6} pt={3} minH="60px">
             <Flex>{renderTopLeftNavigation}</Flex>
             <Box mb={2}>{renderTopRightNavigation}</Box>

@@ -103,21 +103,23 @@ export const BasePageLayout: React.FC<BasePageLayout> = ({
       </Flex>
     );
   return (
-    <Flex
-      direction="column"
-      alignItems="stretch"
-      pb="100px"
-      maxWidth={{ base: '100%', md: '1800px' }}
-      position="relative"
-    >
-      {renderBackgroundImage}
-      {renderHeader && renderHeader(pageLayoutMarginSizesMapping[marginSize])}
-      <Flex direction="row" justifyContent="stretch" minH="100%" px={pageLayoutMarginSizesMapping[marginSize].px}>
-        {renderLeft && <Box>{renderLeft}</Box>}
-        <Box flexGrow={1} {...(centerChildren && { display: 'flex', flexDirection: 'column', alignItems: 'center' })}>
-          {children}
-        </Box>
-        {renderRight && <Box>{renderRight}</Box>}
+    <Flex justifyContent="center">
+      <Flex
+        direction="column"
+        alignItems="stretch"
+        pb="100px"
+        maxWidth={{ base: '100%', md: '2200px' }}
+        position="relative"
+      >
+        {renderBackgroundImage}
+        {renderHeader && renderHeader(pageLayoutMarginSizesMapping[marginSize])}
+        <Flex direction="row" justifyContent="stretch" minH="100%" px={pageLayoutMarginSizesMapping[marginSize].px}>
+          {renderLeft && <Box>{renderLeft}</Box>}
+          <Box flexGrow={1} {...(centerChildren && { display: 'flex', flexDirection: 'column', alignItems: 'center' })}>
+            {children}
+          </Box>
+          {renderRight && <Box>{renderRight}</Box>}
+        </Flex>
       </Flex>
     </Flex>
   );

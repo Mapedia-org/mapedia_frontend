@@ -108,12 +108,19 @@ export const BasePageLayout: React.FC<BasePageLayout> = ({
         direction="column"
         alignItems="stretch"
         pb="100px"
+        width="100%"
         maxWidth={{ base: '100%', md: '2200px' }}
         position="relative"
       >
         {renderBackgroundImage}
         {renderHeader && renderHeader(pageLayoutMarginSizesMapping[marginSize])}
-        <Flex direction="row" justifyContent="stretch" minH="100%" px={pageLayoutMarginSizesMapping[marginSize].px}>
+        <Flex
+          direction="row"
+          justifyContent="stretch"
+          minH="100%"
+          px={pageLayoutMarginSizesMapping[marginSize].px}
+          flexGrow={1}
+        >
           {renderLeft && <Box>{renderLeft}</Box>}
           <Box flexGrow={1} {...(centerChildren && { display: 'flex', flexDirection: 'column', alignItems: 'center' })}>
             {children}

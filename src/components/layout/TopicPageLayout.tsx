@@ -1,7 +1,8 @@
 import { Image } from '@chakra-ui/image';
 import { Flex, Box, Stack, Text } from '@chakra-ui/layout';
+import { useBreakpointValue } from '@chakra-ui/react';
 import { Skeleton } from '@chakra-ui/skeleton';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { BasePageLayout } from './PageLayout';
 
 interface TopicPageLayoutProps {
@@ -25,6 +26,17 @@ export const TopicPageLayout: React.FC<TopicPageLayoutProps> = ({
   isLoading,
   children,
 }) => {
+  const minimapWidth: number =
+    useBreakpointValue({
+      base: 460,
+      md: 460,
+      lg: 500,
+      xl: 580,
+      '2xl': 700,
+    }) || 460;
+  const minimapHeight = useMemo(() => {
+    return (minimapWidth * 4) / 7;
+  }, [minimapWidth]);
   return (
     <BasePageLayout
       marginSize="md"
@@ -72,7 +84,7 @@ export const TopicPageLayout: React.FC<TopicPageLayoutProps> = ({
               justifyContent={{ base: 'center', lg: 'flex-start' }}
               alignItems={{ base: 'center', lg: 'flex-end' }}
             >
-              {renderMinimap(460, 260)}
+              {renderMinimap(minimapWidth, minimapHeight)}
             </Flex>
           </Flex>
         </Flex>

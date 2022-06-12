@@ -31,7 +31,15 @@ export const ExplorePage: React.FC<{}> = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerSize = useElementSize(containerRef);
-  const pxWidth = useBreakpointValue<number>({ base: containerSize?.width || 300, sm: 500, md: 700, lg: 900 }) || 400;
+  const pxWidth =
+    useBreakpointValue<number>({
+      base: containerSize?.width || 300,
+      sm: 500,
+      md: 700,
+      lg: 900,
+      xl: 1100,
+      '2xl': 1300,
+    }) || 400;
   return (
     <PageLayout marginSize="md">
       <Center ref={containerRef} p={1}>

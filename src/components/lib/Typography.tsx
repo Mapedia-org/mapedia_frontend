@@ -1,12 +1,13 @@
-import { Heading, HeadingProps, Text, TextProps, LinkProps } from '@chakra-ui/layout';
-import { graphqlSync } from 'graphql';
+import { Heading, HeadingProps, LinkProps, Text, TextProps } from '@chakra-ui/layout';
+import { useBreakpointValue } from '@chakra-ui/react';
 import { TopicLinkDataFragment } from '../../graphql/topics/topics.fragments.generated';
 import { TopicPageInfo } from '../../pages/RoutesPageInfos';
 import { PageLink } from '../navigation/InternalLink';
 
 export const PageTitle: React.FC<HeadingProps> = ({ children, ...props }) => {
+  const fontSize = useBreakpointValue({ base: '28px', sm: '40px', md: '52px' }) || '52px';
   return (
-    <Heading color="gray.800" fontSize="52px" {...props}>
+    <Heading color="gray.800" fontSize={fontSize} {...props}>
       {children}
     </Heading>
   );
@@ -116,6 +117,9 @@ export const ShowedInTopicLink: React.FC<{ topic: TopicLinkDataFragment; size?: 
 
 // Learning materials
 const LearningMaterialDescriptionSizesMapping = {
+  xs: {
+    fontSize: '13px',
+  },
   sm: {
     fontSize: '15px',
   },
@@ -124,7 +128,7 @@ const LearningMaterialDescriptionSizesMapping = {
   },
 };
 export const LearningMaterialDescriptionStyleProps = (
-  size: 'sm' | 'md' = 'md'
+  size: 'xs' | 'sm' | 'md' = 'md'
 ): Pick<TextProps, 'fontWeight' | 'color' | 'fontSize' | 'whiteSpace' | 'letterSpacing'> => ({
   fontWeight: 400,
   color: 'gray.600',

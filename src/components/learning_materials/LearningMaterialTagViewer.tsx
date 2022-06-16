@@ -2,12 +2,20 @@ import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 
 export const LearningMaterialTagViewer: React.FC<{
   tagName: String;
-  size?: 'sm' | 'md';
+  size?: 'xs' | 'sm' | 'md';
 }> = ({ tagName, size = 'md' }) => {
   return <LearningMaterialTagBase size={size}>{tagName}</LearningMaterialTagBase>;
 };
 
 const sizesMapping = {
+  xs: {
+    fontSize: '10px',
+    fontWeight: 500,
+    borderRadius: '14px',
+    pt: '1px',
+    pb: '2px',
+    px: '5px',
+  },
   sm: {
     fontSize: '12px',
     fontWeight: 500,
@@ -27,7 +35,7 @@ const sizesMapping = {
 };
 export const LearningMaterialTagBase: React.FC<{
   isSelected?: boolean;
-  size?: 'sm' | 'md';
+  size?: 'xs' | 'sm' | 'md';
   onClick?: () => void;
   onClose?: () => void;
 }> = ({ isSelected, size = 'md', onClick, onClose, children }) => {

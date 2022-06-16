@@ -6,7 +6,7 @@ export const LearningMaterialDescription: React.FC<
   {
     description?: string | null;
     isLoading?: boolean;
-    size?: 'sm' | 'md';
+    size?: 'xs' | 'sm' | 'md';
   } & Pick<TextProps, 'noOfLines' | 'color'>
 > = ({ description, isLoading, size = 'md', ...props }) => {
   return description ? (

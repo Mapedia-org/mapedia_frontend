@@ -157,12 +157,13 @@ export const LearningMaterialFeedCardBottomLeftBar: React.FC<{
   learningMaterial: ResourceFeedCardDataFragment | LearningPathFeedCardDataFragment;
   isLoading?: boolean;
 }> = ({ learningMaterial, isLoading }) => {
+  const size: 'xs' | 'sm' = useBreakpointValue({ base: 'xs', sm: 'sm' }) || 'sm';
   return learningMaterial.tags ? (
     <Skeleton isLoaded={!isLoading}>
-      <Wrap direction="row">
+      <Wrap direction="row" spacing={size === 'xs' ? 1 : 2}>
         {learningMaterial.tags.map((tag) => (
           <WrapItem key={tag.name}>
-            <LearningMaterialTagViewer tagName={tag.name} size="sm" />
+            <LearningMaterialTagViewer tagName={tag.name} size={size} />
           </WrapItem>
         ))}
       </Wrap>

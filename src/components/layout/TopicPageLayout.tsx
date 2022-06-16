@@ -28,7 +28,8 @@ export const TopicPageLayout: React.FC<TopicPageLayoutProps> = ({
 }) => {
   const minimapWidth: number =
     useBreakpointValue({
-      base: 460,
+      base: 310,
+      sm: 400,
       md: 460,
       lg: 500,
       xl: 580,
@@ -41,13 +42,21 @@ export const TopicPageLayout: React.FC<TopicPageLayoutProps> = ({
     <BasePageLayout
       marginSize="md"
       renderHeader={(layoutProps) => (
-        <Flex direction="column" alignItems="stretch" position="relative">
-          <Flex w="100%" direction="row" justifyContent="space-between" px={6} pt={3} minH="60px">
+        <Flex direction="column" alignItems="stretch" position="relative" overflowX="clip">
+          <Flex
+            w="100%"
+            direction="row"
+            justifyContent="space-between"
+            px={{ base: '2px', sm: 2, md: 6 }}
+            pt={3}
+            minH="60px"
+          >
             <Flex>{renderTopLeftNavigation}</Flex>
             <Box mb={2}>{renderTopRightNavigation}</Box>
           </Flex>
 
           <Flex
+            overflowX="hidden"
             w="100%"
             direction={{ base: 'column', lg: 'row' }}
             overflow="hidden"

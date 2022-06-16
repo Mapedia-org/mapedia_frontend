@@ -1,4 +1,4 @@
-import { Badge, Heading, Skeleton, Stack, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { Badge, Heading, Skeleton, Stack, Tooltip, useBreakpointValue, useDisclosure } from '@chakra-ui/react';
 import { intersection } from 'lodash';
 import React, { forwardRef, ReactNode, useMemo } from 'react';
 import { ResourceFeedCardDataFragment } from '../../graphql/resources/resources.fragments.generated';
@@ -30,6 +30,7 @@ export const ResourceFeedCard = forwardRef<HTMLDivElement, ResourceFeedCardProps
     { resource, onResourceConsumed, isLoading, showCompletedNotificationToast, expandByDefault, renderTopRight = null },
     ref
   ) => {
+    const resourceDescriptionSize: 'sm' | 'xs' = useBreakpointValue({ base: 'xs', sm: 'sm' }) || 'sm';
     const resourceIsNew = useMemo(() => {
       return !isLoading && new Date(resource.createdAt).getTime() > Date.now() - 6 * 30 * 24 * 60 * 60 * 1000;
     }, [resource.createdAt, isLoading]);
@@ -63,7 +64,7 @@ export const ResourceFeedCard = forwardRef<HTMLDivElement, ResourceFeedCardProps
           <LearningMaterialDescription
             description={resource.description}
             noOfLines={3}
-            size="sm"
+            size={resourceDescriptionSize}
             isLoading={isLoading}
           />
         }
@@ -92,13 +93,14 @@ const SubTitle: React.FC<{ resource: ResourceFeedCardDataFragment; isLoading: bo
   resource,
   isLoading,
 }) => {
+  const size: 'sm' | 'md' = useBreakpointValue({ base: 'sm', sm: 'md' }) || 'md';
   return (
     <Skeleton isLoaded={!isLoading}>
       <Stack spacing={1} direction="row" alignItems="center">
         {resource.types.map((type) => (
-          <LearningMaterialTypeBadge key={type} type={type} />
+          <LearningMaterialTypeBadge size={size} key={type} type={type} />
         ))}
-        <DurationViewer value={resource.durationSeconds} />
+        <DurationViewer value={resource.durationSeconds} size={size} />
       </Stack>
     </Skeleton>
   );
@@ -108,6 +110,7 @@ const TitleLink: React.FC<{ resource: ResourceFeedCardDataFragment; isLoading: b
   resource,
   isLoading,
 }) => {
+  const urlLinkViewerMaxLength = useBreakpointValue({ base: 17, sm: 25, md: 30 }) || 30;
   return (
     <BoxBlockDefaultClickPropagation>
       <ResourceUrlLinkWrapper
@@ -121,7 +124,7 @@ const TitleLink: React.FC<{ resource: ResourceFeedCardDataFragment; isLoading: b
         <Heading mr={1} as="h3" fontSize="22px" color="gray.700" noOfLines={1}>
           {resource.name}
         </Heading>
-        <ResourceUrlLinkViewer resource={resource} maxLength={30} size="sm" />
+        <ResourceUrlLinkViewer resource={resource} maxLength={urlLinkViewerMaxLength} size="sm" />
       </ResourceUrlLinkWrapper>
     </BoxBlockDefaultClickPropagation>
   );

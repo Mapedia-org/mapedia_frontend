@@ -364,7 +364,7 @@ export const TopicPageLearningMaterialsFeed: React.FC<TopicPageLearningMaterials
         />
         {!learningMaterials.length && noFiltersSelected && !initialLoading ? (
           <Center py={20} flexDir="column">
-            <Heading size="xl" color="gray.600" mb={8}>
+            <Heading size="xl" color="gray.600" mb={8} textAlign="center">
               No Resources found
             </Heading>
             <NewResourceModal

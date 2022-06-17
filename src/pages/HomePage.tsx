@@ -161,9 +161,9 @@ export const HomePage: React.FC = () => {
                 content: `Take advantage of the web’s collective intelligence with Mapedia's collaboratively built map of knowledge. Enjoy a range of crowdsourced content, continuously improved through feedback and suggestions.`,
               },
               {
-                title: 'Free, non profit and open source',
+                title: 'Free and open source',
                 content: `Mapedia is free to use and its recommendations favor free content by default. 
-                Our mission is to accelerate the spreading of knowledge by structuring it in an innovative way. In order to remain unbiased and transparent, the project is open source and not for profit.`,
+                Our mission is to accelerate the spreading of knowledge by structuring it in an innovative way. In order to remain unbiased and transparent, the project is open source and has a manifesto`,
               },
             ]}
           />
@@ -206,10 +206,10 @@ export const HomePage: React.FC = () => {
                 title: '...or go straight to what you need.',
                 content: `Reach your goals in the most efficient way by cutting down to what matters.  Instead of one-size-fits-all courses, learn precisely what you need to, no more, no less and be in control of your time.`,
               },
-              {
-                title: 'Enjoy a tailored experience',
-                content: `Get smart recommendations and learning paths built specifically for you based on what you already know, your goals and interests and how you learn best.`,
-              },
+              // {
+              //   title: 'Self directed',
+              //   content: `Get smart recommendations and learning paths built specifically for you based on what you already know, your goals and interests and how you learn best.`,
+              // },
               {
                 title: 'Be in control',
                 content: `Feeling bored in the middle of a course or stuck on a concept? Just switch to another path and find an alternative explanation in one click.`,
@@ -246,11 +246,10 @@ export const HomePage: React.FC = () => {
             color="teal.500"
             borderColor="teal.400"
             items={[
-              {
-                title: 'All your learning in one place',
-                content: `Track what you learn, pause and resume your paths, navigate your history or save learning material for later.`,
-              },
-
+              // {
+              //   title: 'All your learning in one place',
+              //   content: `Track what you learn, pause and resume your paths, navigate your history or save learning material for later.`,
+              // },
               {
                 title: 'Share your journey',
                 content: `Display your progress and achievements on your public profile page, or help future learners by sharing the learning paths you’ve taken.`,

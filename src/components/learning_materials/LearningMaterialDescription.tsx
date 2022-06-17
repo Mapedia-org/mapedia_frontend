@@ -7,7 +7,7 @@ export const LearningMaterialDescription: React.FC<
     description?: string | null;
     isLoading?: boolean;
     size?: 'xs' | 'sm' | 'md';
-  } & Pick<TextProps, 'noOfLines' | 'color'>
+  } & Pick<TextProps, 'noOfLines' | 'color' | 'mr'>
 > = ({ description, isLoading, size = 'md', ...props }) => {
   return description ? (
     <Skeleton isLoaded={!isLoading}>

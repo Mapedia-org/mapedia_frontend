@@ -66,6 +66,7 @@ export const ResourceFeedCard = forwardRef<HTMLDivElement, ResourceFeedCardProps
             noOfLines={3}
             size={resourceDescriptionSize}
             isLoading={isLoading}
+            mr="36px"
           />
         }
         renderPreview={

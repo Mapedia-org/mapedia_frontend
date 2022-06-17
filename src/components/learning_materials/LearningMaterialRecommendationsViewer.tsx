@@ -39,7 +39,7 @@ export const LearningMaterialRecommendationsViewer: React.FC<
     learningMaterial: LearningMaterialRecommendationsViewerDataFragment;
     isLoading: boolean;
     display?: 'vertical' | 'horizontal';
-    size?: 'md' | 'sm' | 'lg';
+    size?: 'xs' | 'sm' | 'md' | 'lg';
   } & FlexProps
 > = ({ learningMaterial, isLoading, display = 'vertical', size = 'md', ...props }) => {
   if (typeof learningMaterial.recommendationsCount !== 'number' && !isLoading)
@@ -67,24 +67,26 @@ export const LearningMaterialRecommendationsViewer: React.FC<
       <Flex
         direction="column"
         justifyContent="center"
-        alignItems={display === 'vertical' ? 'center' : 'flex-start'}
+        alignItems={display === 'vertical' ? 'center' : 'center'}
         {...(display === 'horizontal' && { ml: 1 })}
       >
         <Skeleton isLoaded={!isLoading}>
           <Text
             {...SocialWidgetsLabelStyleProps(size)}
             textAlign="center"
+            size={size}
             {...(display === 'horizontal' && { whiteSpace: 'nowrap' })}
           >
             {!!learningMaterial.recommendedBy?.length ? 'Recommended By' : 'No recommendations'}
           </Text>
         </Skeleton>
+
         {!!learningMaterial.recommendedBy?.length && (
-          <Skeleton isLoaded={!isLoading}>
+          <Skeleton isLoaded={!isLoading} display="flex" alignItems="center">
             <UserAvatarGroup
               users={learningMaterial.recommendedBy.map(({ user }) => user)}
               popoverTitle="Recommended By"
-              size={size}
+              size={size === 'xs' ? 'sm' : size}
             />
           </Skeleton>
         )}

@@ -10,6 +10,8 @@ import {
   Text,
   useBreakpointValue,
   Skeleton,
+  Wrap,
+  WrapItem,
 } from '@chakra-ui/react';
 import { BsArrow90DegUp } from '@react-icons/all-files/bs/BsArrow90DegUp';
 import { BsArrowLeft } from '@react-icons/all-files/bs/BsArrowLeft';
@@ -17,6 +19,7 @@ import { BsArrowRight } from '@react-icons/all-files/bs/BsArrowRight';
 import gql from 'graphql-tag';
 import { intersection } from 'lodash';
 import Router, { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import { Access } from '../../components/auth/Access';
 import { PageLayout, pageLayoutMarginSizesMapping } from '../../components/layout/PageLayout';
 import { EditableLearningMaterialCoveredTopics } from '../../components/learning_materials/EditableLearningMaterialCoveredTopics';
@@ -164,7 +167,7 @@ export const ResourcePage: React.FC<{ resourceKey: string }> = ({ resourceKey })
           </Flex>
         )}
         <Flex direction="column" alignItems="stretch" flexShrink={1} flexGrow={1}>
-          <HeaderBlock resource={resource} isLoading={loading} />
+          <HeaderBlock resource={resource} isLoading={loading} layout={layout} />
           <MainContentBlock resource={resource} isLoading={loading} mt={3} />
           {layout === 'mobile' && (
             <Center>
@@ -317,31 +320,53 @@ const SubTitleBar: React.FC<{ resource: GetResourceResourcePageQuery['getResourc
   resource,
   isLoading,
 }) => {
+  const resourceTypeViewerSize: 'sm' | 'md' | undefined = useBreakpointValue({ base: 'sm', sm: 'md' }, 'md');
   return (
     <Skeleton isLoaded={!isLoading}>
-      <Stack spacing={2} direction="row" alignItems="center">
-        <LearningMaterialTypesViewer learningMaterialTypes={resource.types} />
-        <DurationViewer value={resource.durationSeconds} />
-        <LearningMaterialRecommendButton
-          learningMaterialId={resource._id}
-          isRecommended={!!resource.recommended}
-          size="xs"
-          isDisabled={isLoading}
-        />
-        <ResourceCompletedCheckbox size="xs" resource={resource} isLoading={isLoading} />,
-      </Stack>
+      <Wrap spacing={2} direction="row" alignItems="center" justify="center">
+        <WrapItem>
+          <LearningMaterialTypesViewer learningMaterialTypes={resource.types} size={resourceTypeViewerSize} />
+        </WrapItem>
+        <WrapItem>
+          <DurationViewer value={resource.durationSeconds} />
+        </WrapItem>
+        <WrapItem>
+          <Stack direction="row" alignItems="center">
+            <LearningMaterialRecommendButton
+              learningMaterialId={resource._id}
+              isRecommended={!!resource.recommended}
+              size="xs"
+              isDisabled={isLoading}
+            />
+            <ResourceCompletedCheckbox size="xs" resource={resource} isLoading={isLoading} />
+          </Stack>
+        </WrapItem>
+      </Wrap>
     </Skeleton>
   );
 };
 
-const HeaderBlock: React.FC<{ resource: GetResourceResourcePageQuery['getResourceByKey']; isLoading: boolean }> = ({
-  resource,
-  isLoading,
-}) => {
+const HeaderBlock: React.FC<{
+  resource: GetResourceResourcePageQuery['getResourceByKey'];
+  isLoading: boolean;
+  layout: 'mobile' | 'desktop';
+}> = ({ resource, isLoading, layout }) => {
+  const titleFontSize = useBreakpointValue(
+    {
+      base: 'lg',
+      md: 'xl',
+    },
+    'md'
+  );
+  console.log(titleFontSize);
   return (
-    <Stack h={headerHeight} alignItems="center" spacing={2} justifyContent="center">
+    <Stack
+      alignItems="center"
+      spacing={2}
+      {...(layout === 'desktop' ? { h: headerHeight, justifyContent: 'center' } : { pt: 10 })}
+    >
       <Skeleton isLoaded={!isLoading}>
-        <Heading color="gray.700" textAlign="center">
+        <Heading color="gray.700" textAlign="center" size={titleFontSize}>
           {resource.name}
         </Heading>
       </Skeleton>
@@ -356,7 +381,21 @@ const MainContentBlock: React.FC<
     isLoading: boolean;
   } & Omit<FlexProps, 'resource'>
 > = ({ resource, isLoading, ...props }) => {
+  const videoPlayerSize = useBreakpointValue({ base: '300px', sm: '340' }, 'md');
+  const videoPlayerWidth: number =
+    useBreakpointValue({
+      base: 310,
+      sm: 400,
+      md: 460,
+      lg: 500,
+      xl: 580,
+      '2xl': 700,
+    }) || 460;
+  const videoPlayerHeight = useMemo(() => {
+    return (videoPlayerWidth * 9) / 16;
+  }, [videoPlayerWidth]);
   const { currentUser } = useCurrentUser();
+  const urlLinkSize = useBreakpointValue({ base: 'md' as const, md: 'lg' as const }, 'md');
   return (
     <Flex direction="column" {...props}>
       <Box mb={1}>
@@ -369,7 +408,7 @@ const MainContentBlock: React.FC<
         />
       </Box>
       <Flex mb={2}>
-        <ResourceUrlLink resource={resource} isLoading={isLoading} maxLength={45} size="lg" />
+        <ResourceUrlLink resource={resource} isLoading={isLoading} maxLength={25} size={urlLinkSize} />
       </Flex>
       <Box mb={1}>
         {resource.description && (
@@ -378,7 +417,12 @@ const MainContentBlock: React.FC<
       </Box>
       {intersection(resource.types, [ResourceType.YoutubeVideo, ResourceType.YoutubePlaylist]).length >= 1 && (
         <Center mr={4}>
-          <ResourceYoutubePlayer resource={resource} skipThumbnail />
+          <ResourceYoutubePlayer
+            resource={resource}
+            skipThumbnail
+            width={videoPlayerWidth}
+            height={videoPlayerHeight}
+          />
         </Center>
       )}
     </Flex>

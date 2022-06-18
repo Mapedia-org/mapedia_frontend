@@ -17,8 +17,6 @@ const ExploreMap = dynamic<ExploreMapProps>(
   { ssr: false }
 );
 
-const pxHeight = 500;
-
 export const ExplorePage: React.FC<{}> = () => {
   const router = useRouter();
   const urlSelectedTopicId = router.query.selectedTopicId;
@@ -30,11 +28,11 @@ export const ExplorePage: React.FC<{}> = () => {
     throw new Error(`Invalid url param mapType ${urlSelectedMapType}`);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const containerSize = useElementSize(containerRef);
+  // const containerSize = useElementSize(containerRef);
   const pxWidth =
     useBreakpointValue<number>({
-      base: containerSize?.width || 300,
-      sm: 500,
+      base: 300,
+      sm: 460,
       md: 700,
       lg: 900,
       xl: 1100,
@@ -44,7 +42,7 @@ export const ExplorePage: React.FC<{}> = () => {
     <PageLayout marginSize="md">
       <Center ref={containerRef} p={1}>
         <ExploreMap
-          options={{ direction: 'column', mapPxHeight: (pxWidth * 3) / 5, mapPxWidth: pxWidth }}
+          options={{ direction: 'column', mapPxHeight: (pxWidth * 9) / 16, mapPxWidth: pxWidth }}
           selectedTopicId={urlSelectedTopicId}
           selectedMapType={urlSelectedMapType as MapType}
           onTopicOrMapTypeChange={(topicId, mapType) =>

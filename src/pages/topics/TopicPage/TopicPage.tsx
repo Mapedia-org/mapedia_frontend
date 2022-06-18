@@ -79,6 +79,7 @@ const placeholderTopicData: GetTopicByKeyTopicPageQuery['getTopicByKey'] = {
 
 export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
   const contributionButtonSize = useBreakpointValue({ base: 'sm', md: 'md' }) || 'md';
+  const topicSubHeaderSize = useBreakpointValue({ base: 'sm' as const, sm: 'md' as const }, 'md');
   const { data, loading, error, refetch } = useGetTopicByKeyTopicPageQuery({
     variables: { key: topicKey },
   });
@@ -164,7 +165,7 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
       renderBlockBelowTitle={
         <Flex direction="column" pb={{ base: 4, md: 0 }}>
           <Box pt="2px" pb={3}>
-            <TopicSubHeader topic={topic} size="md" mt={2} displayManage />
+            <TopicSubHeader topic={topic} size={topicSubHeaderSize} mt={2} displayManage />
           </Box>
           {topic && topic.description && (
             <Skeleton isLoaded={!loading}>

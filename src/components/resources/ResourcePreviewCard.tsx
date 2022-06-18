@@ -15,6 +15,7 @@ import {
   Skeleton,
   Stack,
   Text,
+  useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import { intersection } from 'lodash';
@@ -141,6 +142,7 @@ const MainContentBlock: React.FC<{
           description={resource.description}
           noOfLines={showPlayer ? undefined : 2}
           isLoading={isLoading}
+          size="sm"
         />
       </Box>
       {intersection(resource.types, [ResourceType.YoutubeVideo, ResourceType.YoutubePlaylist]).length > 0 && (
@@ -191,6 +193,7 @@ const BottomBlock: React.FC<{
   resource: ResourcePreviewCardDataFragment;
   isLoading?: boolean;
 }> = ({ resource, isLoading }) => {
+  const coveredSubTopicsView = useBreakpointValue({ base: 'compact' as const, md: 'expanded' as const });
   const { currentUser } = useCurrentUser();
   return (
     <Flex pb={1} pt={2} flexWrap="wrap">
@@ -224,7 +227,11 @@ const BottomBlock: React.FC<{
         </Stack>
       </BoxBlockDefaultClickPropagation>
       <Flex flexShrink={0} direction="column" justifyContent="center" px={1}>
-        <LearningMaterialCardCoveredSubTopicsViewer learningMaterial={resource} isLoading={isLoading} />
+        <LearningMaterialCardCoveredSubTopicsViewer
+          learningMaterial={resource}
+          isLoading={isLoading}
+          view={coveredSubTopicsView}
+        />
       </Flex>
     </Flex>
   );

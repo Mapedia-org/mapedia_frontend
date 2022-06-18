@@ -162,11 +162,12 @@ export const ExploreMap: React.FC<ExploreMapProps> = ({
     [setSelectedTopicId]
   );
 
-  const headerSize: 'sm' | 'lg' | undefined = useBreakpointValue({ base: 'sm', md: 'lg' });
+  const headerSize = useBreakpointValue({ base: 'xs' as const, sm: 'sm' as const, md: 'lg' as const }, 'md');
+  const cardSize = useBreakpointValue({ base: 'sm' as const, md: 'md' as const }, 'md');
 
   return (
-    <Stack direction={options.direction} spacing={4} alignItems="center">
-      <ExploreMapFocusedTopicCard topic={loadedTopic} isLoading={isGetTopicLoading} options={options} />
+    <Stack direction={options.direction} spacing={4} alignItems="stretch">
+      <ExploreMapFocusedTopicCard topic={loadedTopic} isLoading={isGetTopicLoading} options={options} size={cardSize} />
 
       <Stack direction="column">
         <Center>
@@ -227,7 +228,8 @@ const ExploreMapFocusedTopicCard: React.FC<{
   topic?: ExploreMapFocusedTopicCardDataFragment;
   isLoading: boolean;
   options: ExploreMapOptions;
-}> = ({ topic, isLoading, options }) => {
+  size?: 'sm' | 'md';
+}> = ({ topic, isLoading, options, size = 'md' }) => {
   return (
     <Box
       bgColor="gray.50"
@@ -250,9 +252,9 @@ const ExploreMapFocusedTopicCard: React.FC<{
           <Box flexGrow={1}>
             <Stack direction="column" spacing={1}>
               <Stack direction="row" alignItems="flex-start" pb={0}>
-                <TopicLink topic={topic} size="2xl" />
+                <TopicLink topic={topic} size={{ sm: 'xl' as const, md: '2xl' as const }[size]} />
               </Stack>
-              <TopicSubHeader topic={topic} subTopicsDisplay="count" />
+              <TopicSubHeader topic={topic} subTopicsDisplay="count" size={size} />
               {topic.description && <TopicDescription topicDescription={topic.description} noOfLines={2} />}
             </Stack>
           </Box>
@@ -261,7 +263,7 @@ const ExploreMapFocusedTopicCard: React.FC<{
               color="blue.500"
               display="flex"
               alignItems="baseline"
-              fontSize="lg"
+              fontSize={{ sm: 'sm', md: 'lg' }[size]}
               pageInfo={TopicPageInfo(topic)}
               isExternal
             >

@@ -1,4 +1,4 @@
-import { Box, Divider, Link, Text } from '@chakra-ui/react';
+import { Box, Center, Divider, Link, Stack, Text } from '@chakra-ui/react';
 import Router from 'next/router';
 import { RegisterForm } from '../components/auth/RegisterForm';
 import { RoleAccess } from '../components/auth/RoleAccess';
@@ -9,8 +9,8 @@ import { LoginPageInfo } from './RoutesPageInfos';
 export const RegisterPage: React.FC = () => {
   return (
     <RoleAccess accessRule="notLoggedInUser" redirectTo="/">
-      <PageLayout marginSize="xl" title="Register" centerChildren>
-        <Box width="36rem">
+      <PageLayout marginSize="xl" title="Register">
+        <Stack maxW="36rem" margin="auto">
           <RegisterForm onSuccess={() => Router.push(`/`)} />
           <Divider my={4}></Divider>
           <Box textAlign="center">
@@ -21,7 +21,7 @@ export const RegisterPage: React.FC = () => {
               </PageLink>
             </Text>
           </Box>
-        </Box>
+        </Stack>
       </PageLayout>
     </RoleAccess>
   );

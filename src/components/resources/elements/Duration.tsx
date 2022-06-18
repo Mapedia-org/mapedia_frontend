@@ -37,7 +37,7 @@ const durationToHumanReadable = (value: number) =>
 
 export const DurationViewer: React.FC<{ value?: number | null; size?: 'sm' | 'md' }> = ({ value, size = 'md' }) => {
   return value ? (
-    <Text fontSize={{ sm: 'xs', md: 'sm' }[size]} color="gray.400" mb={0}>
+    <Text fontSize={{ sm: 'xs', md: 'sm' }[size]} color="gray.400" mb={0} whiteSpace="nowrap">
       ~ {durationToHumanReadable(value)}
     </Text>
   ) : null;

@@ -117,7 +117,7 @@ export const BasePageLayout: React.FC<BasePageLayout> = ({
         <Flex
           direction="row"
           justifyContent="stretch"
-          minH="100%"
+          minH="100vh"
           px={pageLayoutMarginSizesMapping[marginSize].px}
           flexGrow={1}
         >

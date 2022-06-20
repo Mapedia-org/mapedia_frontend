@@ -1,7 +1,8 @@
 import { Image } from '@chakra-ui/image';
 import { Flex, Box, Stack, Text } from '@chakra-ui/layout';
+import { useBreakpointValue } from '@chakra-ui/react';
 import { Skeleton } from '@chakra-ui/skeleton';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { BasePageLayout } from './PageLayout';
 
 interface TopicPageLayoutProps {
@@ -25,17 +26,37 @@ export const TopicPageLayout: React.FC<TopicPageLayoutProps> = ({
   isLoading,
   children,
 }) => {
+  const minimapWidth: number =
+    useBreakpointValue({
+      base: 310,
+      sm: 400,
+      md: 460,
+      lg: 500,
+      xl: 580,
+      '2xl': 700,
+    }) || 460;
+  const minimapHeight = useMemo(() => {
+    return (minimapWidth * 4) / 7;
+  }, [minimapWidth]);
   return (
     <BasePageLayout
       marginSize="md"
       renderHeader={(layoutProps) => (
-        <Flex w="100%" direction="column" alignItems="stretch" position="relative">
-          <Flex w="100%" direction="row" justifyContent="space-between" px={6} pt={3} minH="60px">
+        <Flex direction="column" alignItems="stretch" position="relative" overflowX="clip">
+          <Flex
+            w="100%"
+            direction="row"
+            justifyContent="space-between"
+            px={{ base: '2px', sm: 2, md: 6 }}
+            pt={3}
+            minH="60px"
+          >
             <Flex>{renderTopLeftNavigation}</Flex>
             <Box mb={2}>{renderTopRightNavigation}</Box>
           </Flex>
 
           <Flex
+            overflowX="hidden"
             w="100%"
             direction={{ base: 'column', lg: 'row' }}
             overflow="hidden"
@@ -72,7 +93,7 @@ export const TopicPageLayout: React.FC<TopicPageLayoutProps> = ({
               justifyContent={{ base: 'center', lg: 'flex-start' }}
               alignItems={{ base: 'center', lg: 'flex-end' }}
             >
-              {renderMinimap(460, 260)}
+              {renderMinimap(minimapWidth, minimapHeight)}
             </Flex>
           </Flex>
         </Flex>

@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
   Tooltip,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { AiOutlineEye } from '@react-icons/all-files/ai/AiOutlineEye';
 import gql from 'graphql-tag';
@@ -146,6 +147,7 @@ export const LearningPathPage: React.FC<{ learningPathKey: string }> = ({ learni
   const { data, loading, error, refetch } = useGetLearningPathPageQuery({
     variables: { key: learningPathKey },
   });
+  const titleFontSize = useBreakpointValue({ base: '3xl', sm: '4xl', md: '5xl' }, 'md');
   const learningPath = data?.getLearningPathByKey || learningPathPlaceholder;
   const { currentUser } = useCurrentUser();
   const currentUserIsOwner = useMemo(
@@ -221,6 +223,7 @@ export const LearningPathPage: React.FC<{ learningPathKey: string }> = ({ learni
               updateLearningPath({ variables: { _id: learningPath._id, payload: { name: newName } } })
             }
             editMode={editMode}
+            fontSize={titleFontSize}
           />
         </Center>
         <Flex direction={{ base: 'column', md: 'row' }} alignItems="stretch">

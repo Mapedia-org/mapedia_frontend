@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Link, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Link, Skeleton, Stack, Text, useBreakpointValue } from '@chakra-ui/react';
 import gql from 'graphql-tag';
 import { useEffect, useState } from 'react';
 import { useUnauthentificatedModal } from '../../../components/auth/UnauthentificatedModal';
@@ -78,6 +78,8 @@ const placeholderTopicData: GetTopicByKeyTopicPageQuery['getTopicByKey'] = {
 };
 
 export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
+  const contributionButtonSize = useBreakpointValue({ base: 'sm', md: 'md' }) || 'md';
+  const topicSubHeaderSize = useBreakpointValue({ base: 'sm' as const, sm: 'md' as const }, 'md');
   const { data, loading, error, refetch } = useGetTopicByKeyTopicPageQuery({
     variables: { key: topicKey },
   });
@@ -163,7 +165,7 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
       renderBlockBelowTitle={
         <Flex direction="column" pb={{ base: 4, md: 0 }}>
           <Box pt="2px" pb={3}>
-            <TopicSubHeader topic={topic} size="md" mt={2} displayManage />
+            <TopicSubHeader topic={topic} size={topicSubHeaderSize} mt={2} displayManage />
           </Box>
           {topic && topic.description && (
             <Skeleton isLoaded={!loading}>
@@ -239,6 +241,7 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
               renderButton={(openModal) => (
                 <Button
                   leftIcon={<ResourceIcon boxSize={6} />}
+                  size={contributionButtonSize}
                   variant="solid"
                   colorScheme="teal"
                   isDisabled={loading}
@@ -257,6 +260,7 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
               renderButton={(openModal) => (
                 <Button
                   leftIcon={<TopicIcon />}
+                  size={contributionButtonSize}
                   variant="solid"
                   colorScheme="blue"
                   isDisabled={loading}
@@ -273,6 +277,7 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
             />
             <PageButtonLink
               leftIcon={<LearningPathIcon boxSize={7} />}
+              size={contributionButtonSize}
               variant="solid"
               colorScheme="teal"
               pageInfo={NewLearningPathPageInfo}
@@ -283,10 +288,9 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
             </PageButtonLink>
           </Stack>
           <SeeAlso topic={topic} />
-          {/* <BestXPagesLinks topicKey={topic.key} /> TODO - fix*/}
         </Stack>
       </Flex>
-      <Flex direction="column" alignItems="stretch" pt={20}>
+      {/* <Flex direction="column" alignItems="stretch" pt={20}>
         <Discussion
           discussionLocation={DiscussionLocation.TopicPage}
           discussionEntityId={topic._id}
@@ -294,7 +298,7 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
           refetch={() => refetch()}
           isLoading={loading}
         />
-      </Flex>
+      </Flex> */}
     </TopicPageLayout>
   );
 };

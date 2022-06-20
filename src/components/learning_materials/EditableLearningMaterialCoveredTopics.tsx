@@ -35,7 +35,7 @@ export const StatelessEditableLearningMaterialCoveredTopics: React.FC<
 > = ({ coveredTopics, showedInTopics, editable, isLoading, onRemove, onAdded }) => {
   return (
     <Stack direction="column" alignItems="center" spacing={1}>
-      <Text fontWeight={600} color="gray.500">
+      <Text fontWeight={600} color="gray.500" textAlign="center">
         {coveredTopics?.length ? 'Covered SubTopics' : 'No covered SubTopics'}
       </Text>
       {coveredTopics && (

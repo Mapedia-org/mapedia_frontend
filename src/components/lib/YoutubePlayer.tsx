@@ -1,6 +1,6 @@
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer, { YouTubePlayerProps } from 'react-player/youtube';
 
-interface YoutubePlayerProps {
+interface YoutubePlayerProps extends YouTubePlayerProps {
   videoUrl: string;
   h?: string;
   w?: string;
@@ -18,6 +18,7 @@ export const YoutubePlayer: React.FC<YoutubePlayerProps> = ({
   onEnded,
   onStart,
   skipThumbnail,
+  ...props
 }) => {
   return (
     <ReactPlayer
@@ -29,6 +30,7 @@ export const YoutubePlayer: React.FC<YoutubePlayerProps> = ({
       controls
       onEnded={onEnded}
       onStart={onStart}
+      {...props}
     />
   );
 };

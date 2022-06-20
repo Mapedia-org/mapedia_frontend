@@ -297,7 +297,7 @@ export const SubTopicsTree: React.FC<SubTopicsTreeProps> = ({ topic, onUpdated, 
 
   return (
     <>
-      <Stack spacing={4} width="1200px">
+      <Stack spacing={4} width={{ base: '320px', sm: '600px', md: '760px', lg: '1000px', xl: '1200px' }}>
         {isLoading || isUpdating ? (
           <Center h="400px" w="100%">
             <Spinner size="xl" />
@@ -306,52 +306,54 @@ export const SubTopicsTree: React.FC<SubTopicsTreeProps> = ({ topic, onUpdated, 
           treeData.length && (
             <Box h={`${count * 72 + 10}px`} w="100%" position="relative">
               <Box overflow="visible" position="absolute" right={4} top={4} h="100%">
-                <Stack spacing={8} right={4} top={4} pt={4} position="sticky" w="200px" bgColor="white" zIndex={3}>
-                  {updatable && treeData.length && (
-                    <RoleAccess accessRule="contributorOrAdmin">
-                      <Stack direction="column" spacing={3}>
-                        <Button
-                          colorScheme="teal"
-                          isDisabled={!pendingUpdates.length}
-                          onClick={() => runPendingUpdates()}
-                          flexGrow={1}
-                        >
-                          Save
-                          {!!pendingUpdates.length &&
-                            ` (${pendingUpdates.length} change${pendingUpdates.length === 1 ? '' : 's'})`}
-                        </Button>
-                        <Button
-                          isDisabled={!pendingUpdates.length}
-                          onClick={() => {
-                            setPendingUpdates([]);
-                            buildTreeData();
-                          }}
-                          colorScheme="red"
-                          variant="outline"
-                          flexGrow={1}
-                        >
-                          Cancel
-                        </Button>
-                      </Stack>
+                <RoleAccess accessRule="loggedInUser">
+                  <Stack spacing={8} right={4} top={4} pt={4} position="sticky" w="200px" bgColor="white" zIndex={3}>
+                    {updatable && treeData.length && (
+                      <RoleAccess accessRule="contributorOrAdmin">
+                        <Stack direction="column" spacing={3}>
+                          <Button
+                            colorScheme="teal"
+                            isDisabled={!pendingUpdates.length}
+                            onClick={() => runPendingUpdates()}
+                            flexGrow={1}
+                          >
+                            Save
+                            {!!pendingUpdates.length &&
+                              ` (${pendingUpdates.length} change${pendingUpdates.length === 1 ? '' : 's'})`}
+                          </Button>
+                          <Button
+                            isDisabled={!pendingUpdates.length}
+                            onClick={() => {
+                              setPendingUpdates([]);
+                              buildTreeData();
+                            }}
+                            colorScheme="red"
+                            variant="outline"
+                            flexGrow={1}
+                          >
+                            Cancel
+                          </Button>
+                        </Stack>
+                      </RoleAccess>
+                    )}
+                    <RoleAccess accessRule="loggedInUser">
+                      <NewTopicModal
+                        parentTopic={topic}
+                        renderButton={(openModal) => (
+                          <Button
+                            colorScheme="blue"
+                            onClick={() => openModal()}
+                            variant="solid"
+                            leftIcon={<TopicIcon boxSize="20px" />}
+                          >
+                            Add SubTopic
+                          </Button>
+                        )}
+                        onCreated={() => onUpdated()}
+                      />
                     </RoleAccess>
-                  )}
-                  <RoleAccess accessRule="loggedInUser">
-                    <NewTopicModal
-                      parentTopic={topic}
-                      renderButton={(openModal) => (
-                        <Button
-                          colorScheme="blue"
-                          onClick={() => openModal()}
-                          variant="solid"
-                          leftIcon={<TopicIcon boxSize="20px" />}
-                        >
-                          Add SubTopic
-                        </Button>
-                      )}
-                      onCreated={() => onUpdated()}
-                    />
-                  </RoleAccess>
-                </Stack>
+                  </Stack>
+                </RoleAccess>
               </Box>
               <SortableTree
                 treeData={treeData}

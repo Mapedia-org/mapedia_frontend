@@ -42,7 +42,7 @@ export const CurrentUserLearningPathsPage: React.FC<{}> = () => {
   if (!currentUser && !loading) return null;
 
   return (
-    <PageLayout title="My Learning Paths" marginSize="md" isLoading={loading} centerChildren>
+    <PageLayout title="My Learning Paths" marginSize="md" isLoading={loading}>
       <Text fontSize="3xl" mt={5}>
         Started Paths
       </Text>

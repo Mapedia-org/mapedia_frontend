@@ -164,6 +164,7 @@ export const Header: React.FC = () => {
         asHref="/"
         color="mainDarker"
         fontWeight="medium"
+        fontSize={{ base: 'sm', sm: 'md' }}
         _focus={{}}
         _hover={{ color: 'brand.800' }}
       >
@@ -189,7 +190,7 @@ export const Header: React.FC = () => {
               _focus={{}}
               onClick={() => routerPushToPage(ExploreMapPagePageInfo)}
             />
-            <GlobalSearchBox positionSuggestions="left" width={{ base: '120px', sm: '180px', md: '200px' }} />
+            <GlobalSearchBox positionSuggestions="left" width={{ base: '100px', sm: '180px', md: '200px' }} />
             <Menu>
               <MenuButton
                 as={IconButton}

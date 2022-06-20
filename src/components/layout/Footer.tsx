@@ -17,13 +17,13 @@ export const Footer: React.FC<{}> = () => {
         color="white"
       >
         <Flex alignItems="center" w="35%" mr={{ base: 2, sm: 4 }}>
-          <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight={500}>
+          <Text fontSize={{ base: 'sm', sm: 'md', md: 'lg' }} fontWeight={600}>
             © {new Date().getFullYear()} Mapedia.org
           </Text>
         </Flex>
 
         <Flex direction="row" alignItems="stretch" justifyContent="space-between" w="65%">
-          <Flex justifyContent="center" flexGrow={1} fontSize={{ base: 'md', md: 'lg' }}>
+          <Flex justifyContent="center" flexGrow={1} fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}>
             <Stack spacing={2} mr={3}>
               <Link href="https://github.com/Mapedia-org" _hover={{}} fontWeight={500} isExternal>
                 <Stack direction="row" spacing={1} alignItems="center">
@@ -45,7 +45,7 @@ export const Footer: React.FC<{}> = () => {
               </Link>
             </Stack>
           </Flex>
-          <Stack direction="row" spacing={{ base: 2, sm: 5, md: 12 }} fontSize={{ base: 'sm', md: 'ms' }}>
+          <Stack direction="row" spacing={{ base: 2, sm: 5, md: 12 }} fontSize={{ base: 'xs', sm: 'sm', md: 'md' }}>
             <Stack direction="column" spacing={2} alignItems="center">
               <Link href="/about" isExternal>
                 About

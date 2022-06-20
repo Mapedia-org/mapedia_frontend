@@ -29,8 +29,8 @@ export const LoginPage: React.FC = () => {
   }, [redirectTo, currentUser]);
 
   return (
-    <PageLayout marginSize="xl" title="Login" centerChildren>
-      <Stack width="36rem">
+    <PageLayout marginSize="xl" title="Login">
+      <Stack maxW="36rem" margin="auto">
         <LoginForm
           onSuccessfulLogin={({ redirectUrl }) => {
             if (redirectUrl) {

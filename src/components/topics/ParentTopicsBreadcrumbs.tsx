@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Skeleton, Stack, Text, useBreakpointValue, Wrap, WrapItem } from '@chakra-ui/react';
 import gql from 'graphql-tag';
 import { TopicLinkData } from '../../graphql/topics/topics.fragments';
 import { ParentTopicsBreadcrumbsDataFragment } from './ParentTopicsBreadcrumbs.generated';
@@ -21,13 +21,28 @@ export const ParentTopicsBreadcrumbs: React.FC<{ topic: ParentTopicsBreadcrumbsD
   topic,
   isLoading,
 }) => {
+  const size: 'sm' | 'md' | 'xl' = useBreakpointValue({ base: 'sm', sm: 'md', md: 'xl' }) || 'xl';
   return (
     <Skeleton isLoaded={!isLoading}>
-      <Stack direction="row">
-        {topic.parentTopic?.parentTopic && <TopicLink size="xl" topic={topic.parentTopic.parentTopic} />}
-        {topic.parentTopic?.parentTopic && <Text>/</Text>}
-        {topic.parentTopic && <TopicLink size="xl" topic={topic.parentTopic} />}
-      </Stack>
+      <Wrap>
+        {topic.parentTopic?.parentTopic && (
+          <WrapItem>
+            <TopicLink size={size} topic={topic.parentTopic.parentTopic} />
+          </WrapItem>
+        )}
+        {topic.parentTopic?.parentTopic && (
+          <WrapItem>
+            <Text as="span" fontSize={size}>
+              /
+            </Text>
+          </WrapItem>
+        )}
+        {topic.parentTopic && (
+          <WrapItem>
+            <TopicLink size={size} topic={topic.parentTopic} />
+          </WrapItem>
+        )}
+      </Wrap>
     </Skeleton>
   );
 };

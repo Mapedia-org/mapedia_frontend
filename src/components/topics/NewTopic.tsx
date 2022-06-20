@@ -18,6 +18,7 @@ import {
   ModalContent,
   ModalOverlay,
   Stack,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import gql from 'graphql-tag';
 import { uniqBy, upperFirst } from 'lodash';
@@ -93,6 +94,7 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
   onConnectSubTopic,
   size = 'md',
 }) => {
+  const halfFieldWidth = useBreakpointValue({ base: '300px', md: '500px' }, 'md');
   const { isChecking, isAvailable } = useCheckTopicKeyAvailability(
     topicCreationData.contextTopic
       ? topicCreationData.key + `_(_${topicCreationData.contextTopic.key}_)`
@@ -122,7 +124,7 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
   const formHasErrors = useMemo(() => Object.keys(formErrors).length > 0, [formErrors]);
 
   return (
-    <Flex direction="column" w="100%">
+    <Flex direction="column" w="100%" overflow="hidden">
       <Flex position="relative" justifyContent="center" alignItems="center" h="240px">
         {parentTopic && (
           <Heading size="md" fontWeight={500} position="absolute" left={5} top={5}>
@@ -131,15 +133,9 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
         )}
         <FormTitle position="relative" zIndex={1}>
           {parentTopic ? 'Add SubTopic' : 'New Topic'}
-          <Image
-            position="absolute"
-            src="/images/topostain_pin_add_topic.svg"
-            w="300px"
-            maxW="300px"
-            right="-250px"
-            top="-100px"
-            zIndex={0}
-          />
+          <Box position="absolute" right="-250px" top="-100px" zIndex={0}>
+            <Image w="300px" maxW="300px" src="/images/topostain_pin_add_topic.svg" />
+          </Box>
         </FormTitle>
       </Flex>
       <Stack spacing={10} alignItems="stretch">
@@ -183,7 +179,7 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
                   },
                 })
               }
-              w="500px"
+              w={halfFieldWidth}
             />
             <Box mt={1} pl={4}>
               <TopicAliasesField
@@ -199,7 +195,7 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
             <TopicLevelEditor
               value={topicCreationData.level}
               onChange={(level) => updateTopicCreationData({ level })}
-              w="500px"
+              w={halfFieldWidth}
             />
           </Field>
         </Center>

@@ -16,12 +16,28 @@ import {
 import humanizeDuration from 'humanize-duration';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-const durationToHumanReadable = (value: number) =>
-  humanizeDuration(value * 1000, { largest: 2, units: ['w', 'd', 'h', 'm', 's'], round: true });
+const shortEnglishHumanizer = humanizeDuration.humanizer({
+  language: 'shortEn',
+  languages: {
+    shortEn: {
+      y: (count) => (count === 1 ? 'year' : 'years'),
+      mo: (count) => (count === 1 ? 'month' : 'months'),
+      w: (count) => (count === 1 ? 'week' : 'weeks'),
+      d: (count) => (count === 1 ? 'day' : 'days'),
+      h: (count) => (count === 1 ? 'hour' : 'hours'),
+      m: (count) => 'min',
+      s: () => 's',
+      ms: () => 'ms',
+    },
+  },
+});
 
-export const DurationViewer: React.FC<{ value?: number | null }> = ({ value }) => {
+const durationToHumanReadable = (value: number) =>
+  shortEnglishHumanizer(value * 1000, { largest: 2, units: ['w', 'd', 'h', 'm', 's'], round: true });
+
+export const DurationViewer: React.FC<{ value?: number | null; size?: 'sm' | 'md' }> = ({ value, size = 'md' }) => {
   return value ? (
-    <Text fontSize="sm" color="gray.400" mb={0}>
+    <Text fontSize={{ sm: 'xs', md: 'sm' }[size]} color="gray.400" mb={0} whiteSpace="nowrap">
       ~ {durationToHumanReadable(value)}
     </Text>
   ) : null;

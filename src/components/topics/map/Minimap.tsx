@@ -39,15 +39,14 @@ export const Minimap: React.FC<MinimapProps> = ({
   subTopics,
   parentTopic,
   isLoading,
-  pxWidth = 300,
-  pxHeight = 200,
+  pxWidth = 320,
+  pxHeight = (320 * 4) / 7,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedMapType, setSelectedMapType] = useState<MapType>(MapType.SUBTOPICS);
-
   return (
     <Stack spacing={0}>
-      <MapHeader value={selectedMapType} onChange={setSelectedMapType} size="sm" />
+      <MapHeader value={selectedMapType} onChange={setSelectedMapType} size={pxWidth > 400 ? 'sm' : 'xs'} />
 
       <Box
         w={`${pxWidth}px`}

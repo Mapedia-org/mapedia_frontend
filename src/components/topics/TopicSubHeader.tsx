@@ -37,7 +37,7 @@ export const TopicSubHeaderData = gql`
 
 interface TopicSubHeaderProps {
   topic: TopicSubHeaderDataFragment;
-  size?: 'md'; // Not implemented yet
+  size?: 'sm' | 'md';
   isLoading?: boolean;
   subTopicsDisplay?: 'tree' | 'count';
   displayManage?: boolean;
@@ -53,27 +53,27 @@ export const TopicSubHeader: React.FC<TopicSubHeaderProps & WrapProps> = ({
 }) => {
   const { currentUser } = useCurrentUser();
   const menuItems = [
-    ...(!!topic.topicTypes ? [<TopicTypesViewer topicTypes={topic.topicTypes} maxShown={2} />] : []),
-    ...(typeof topic.level === 'number' ? [<TopicLevelViewer level={topic.level} />] : []),
+    ...(!!topic.topicTypes ? [<TopicTypesViewer topicTypes={topic.topicTypes} maxShown={2} size={size} />] : []),
+    ...(typeof topic.level === 'number' ? [<TopicLevelViewer level={topic.level} size={size} />] : []),
     subTopicsDisplay === 'tree' ? (
       <TextSubHeaderItem
         size={size}
         pageInfo={TopicTreePageInfo(topic)}
-        leftIcon={<TopicIcon boxSize="22px" color="currentColor" />}
+        leftIcon={<TopicIcon boxSize={{ sm: '18px', md: '22px' }[size]} color="currentColor" />}
         text="SubTopics Tree"
-        rightIcon={<TreeIcon boxSize="20px" color="currentColor" mt="2px" />}
+        rightIcon={<TreeIcon boxSize={{ sm: '15px', md: '20px' }[size]} color="currentColor" mt="2px" />}
       />
     ) : (
       <TextSubHeaderItem
         size={size}
         pageInfo={TopicTreePageInfo(topic)}
-        leftIcon={<TopicIcon boxSize="22px" color="currentColor" />}
+        leftIcon={<TopicIcon boxSize={{ sm: '17px', md: '22px' }[size]} color="currentColor" />}
         text={`${topic.subTopicsTotalCount} SubTopics`}
       />
     ),
     <TextSubHeaderItem
       size={size}
-      leftIcon={<ResourceIcon boxSize="20px" color="currentColor" />}
+      leftIcon={<ResourceIcon boxSize={{ sm: '15px', md: '20px' }[size]} color="currentColor" />}
       text={`${topic.learningMaterialsTotalCount} Resources`}
     />,
     ...(displayManage && userHasAccess('contributorOrAdmin', currentUser)
@@ -90,7 +90,7 @@ export const TopicSubHeader: React.FC<TopicSubHeaderProps & WrapProps> = ({
     final.push(item);
     if (idx < menuItems.length - 1)
       final.push(
-        <Text fontWeight={500} fontSize="15px" color="gray.500">
+        <Text fontWeight={500} fontSize={{ sm: '13px', md: '15px' }[size]} color="gray.500">
           |
         </Text>
       );
@@ -98,7 +98,7 @@ export const TopicSubHeader: React.FC<TopicSubHeaderProps & WrapProps> = ({
     return final;
   }, [] as JSX.Element[]);
   return (
-    <Wrap spacing="11px" {...wrapProps}>
+    <Wrap spacing={{ sm: '8px', md: '11px' }[size]} {...wrapProps}>
       {menuItems.map((menuItem, idx) => (
         <WrapItem key={idx}>
           <Skeleton isLoaded={!isLoading}>{menuItem}</Skeleton>
@@ -115,12 +115,12 @@ const TextSubHeaderItem: React.FC<{
   rightIcon?: ReactNode;
   pageInfo?: PageInfo;
   onClick?: () => void;
-}> = ({ text, leftIcon = null, rightIcon = null, pageInfo }) => {
+}> = ({ text, leftIcon = null, rightIcon = null, pageInfo, size = 'md' }) => {
   const visualElement = (
     <Stack
       direction="row"
       alignItems="center"
-      spacing="5px"
+      spacing={{ sm: '3px', md: '5px' }[size]}
       color="gray.600"
       _hover={{ color: 'gray.800' }}
       transition="color ease-in 0.15s"
@@ -128,7 +128,7 @@ const TextSubHeaderItem: React.FC<{
       {leftIcon}
       <Text
         fontWeight={500}
-        fontSize="14px"
+        fontSize={{ sm: '12px', md: '14px' }[size]}
         pt="1px"
         textDecoration="unset"
         _hover={{ textDecoration: 'unset' }}

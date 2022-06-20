@@ -11,20 +11,20 @@ export enum MapType {
 export const MapHeader: React.FC<{
   onChange: (mapType: MapType) => void;
   value: MapType;
-  size: 'lg' | 'sm';
+  size: 'lg' | 'sm' | 'xs';
   disabledMapTypes?: MapType[];
 }> = ({ onChange, size, value, disabledMapTypes }) => {
   return (
     <Stack direction="row" alignItems="stretch" spacing={1}>
-      <Center p={1}>
-        <MapIcon boxSize={{ sm: 6, lg: 8 }[size]} color="gray.800" />
+      <Center p={{ xs: '2px', sm: '4px', lg: '6px' }[size]}>
+        <MapIcon boxSize={{ xs: 4, sm: 6, lg: 8 }[size]} color="gray.800" />
       </Center>
-      <Stack direction="row" alignItems="stretch" spacing={1} pt="3px">
+      <Stack direction="row" alignItems="stretch" spacing={{ xs: '2px', sm: '4px', lg: '6px' }[size]} pt="3px">
         {Object.values(MapType).map((mapType, idx) => (
           <React.Fragment key={mapType}>
             {idx !== 0 && (
               <Center>
-                <Text fontSize={{ sm: 'lg', lg: 'xl' }[size]}>|</Text>
+                <Text fontSize={{ xs: 'md', sm: 'lg', lg: 'xl' }[size]}>|</Text>
               </Center>
             )}
             <Center>
@@ -47,7 +47,7 @@ export const MapHeader: React.FC<{
 const MapTypeMenuItem: React.FC<{
   onSelect: () => void;
   isSelected?: boolean;
-  size: 'lg' | 'sm';
+  size: 'lg' | 'sm' | 'xs';
   isDisabled: boolean;
 }> = ({ size, isSelected, onSelect, children, isDisabled }) => {
   return (
@@ -56,7 +56,7 @@ const MapTypeMenuItem: React.FC<{
       _hover={{
         cursor: isDisabled ? 'initial' : 'pointer',
       }}
-      fontSize={{ sm: 'lg', lg: 'xl' }[size]}
+      fontSize={{ xs: 'sm', sm: 'lg', lg: 'xl' }[size]}
       lineHeight="18px"
       fontWeight={500}
       color={isSelected ? 'blue.600' : isDisabled ? 'gray.500' : 'gray.800'}

@@ -1,4 +1,4 @@
-import { Box, BoxProps, Flex, FlexProps, Heading, Skeleton, Text } from '@chakra-ui/react';
+import { Box, BoxProps, Flex, FlexProps, Heading, Skeleton, Text, useBreakpointValue } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { useCurrentUser } from '../../graphql/users/users.hooks';
 import { RoleAccessAllowedRule, userHasAccess } from '../auth/RoleAccess';
@@ -6,19 +6,19 @@ import { NavigationBreadcrumbs, NavigationBreadcrumbsProps } from './NavigationB
 
 export const pageLayoutMarginSizesMapping: { [key in 'sm' | 'md' | 'lg' | 'xl' | '2xl']: { px: FlexProps['px'] } } = {
   sm: {
-    px: { sm: '1%', md: '3%' },
+    px: { base: '4px', sm: '1%', md: '3%' },
   },
   md: {
-    px: { sm: '2%', md: '5%' },
+    px: { base: '4px', sm: '2%', md: '5%' },
   },
   lg: {
-    px: { sm: '3%', md: '8%' },
+    px: { base: '4px', sm: '3%', md: '8%' },
   },
   xl: {
-    px: { sm: '5%', md: '16%' },
+    px: { base: '4px', sm: '5%', md: '16%' },
   },
   '2xl': {
-    px: { sm: '7%', md: '25%' },
+    px: { base: '4px', sm: '7%', md: '25%' },
   },
 };
 
@@ -103,21 +103,30 @@ export const BasePageLayout: React.FC<BasePageLayout> = ({
       </Flex>
     );
   return (
-    <Flex
-      direction="column"
-      alignItems="stretch"
-      pb="100px"
-      maxWidth={{ base: '100%', md: '1800px' }}
-      position="relative"
-    >
-      {renderBackgroundImage}
-      {renderHeader && renderHeader(pageLayoutMarginSizesMapping[marginSize])}
-      <Flex direction="row" justifyContent="stretch" minH="100%" px={pageLayoutMarginSizesMapping[marginSize].px}>
-        {renderLeft && <Box>{renderLeft}</Box>}
-        <Box flexGrow={1} {...(centerChildren && { display: 'flex', flexDirection: 'column', alignItems: 'center' })}>
-          {children}
-        </Box>
-        {renderRight && <Box>{renderRight}</Box>}
+    <Flex justifyContent="center" id="here">
+      <Flex
+        direction="column"
+        alignItems="stretch"
+        pb="100px"
+        width="100%"
+        maxWidth={{ base: '100%', md: '2200px' }}
+        position="relative"
+      >
+        {renderBackgroundImage}
+        {renderHeader && renderHeader(pageLayoutMarginSizesMapping[marginSize])}
+        <Flex
+          direction="row"
+          justifyContent="stretch"
+          minH="100vh"
+          px={pageLayoutMarginSizesMapping[marginSize].px}
+          flexGrow={1}
+        >
+          {renderLeft && <Box>{renderLeft}</Box>}
+          <Box flexGrow={1} {...(centerChildren && { display: 'flex', flexDirection: 'column', alignItems: 'center' })}>
+            {children}
+          </Box>
+          {renderRight && <Box>{renderRight}</Box>}
+        </Flex>
       </Flex>
     </Flex>
   );
@@ -140,6 +149,7 @@ const BasicPageHeader: React.FC<BasicPageHeaderProps> = ({
   renderTopLeft,
   isLoading,
 }) => {
+  const breadcrumbSize: 'sm' | 'md' = useBreakpointValue({ base: 'sm', md: 'md' }) || 'md';
   return (
     <Flex direction="column" alignItems="stretch" pt="16px">
       {(breadCrumbsLinks || renderTopRight || renderTopLeft) && (
@@ -147,7 +157,7 @@ const BasicPageHeader: React.FC<BasicPageHeaderProps> = ({
           <Flex direction="column">
             {!!breadCrumbsLinks && !!breadCrumbsLinks.length && (
               <Skeleton isLoaded={!isLoading}>
-                <NavigationBreadcrumbs links={breadCrumbsLinks} />
+                <NavigationBreadcrumbs links={breadCrumbsLinks} size={breadcrumbSize} />
               </Skeleton>
             )}
             {renderTopLeft}

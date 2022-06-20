@@ -18,11 +18,11 @@ export interface NavigationBreadcrumbsProps {
 export const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({ links, size = 'md' }) => {
   const router = useRouter();
   return (
-    <Breadcrumb fontSize={size}>
+    <Breadcrumb fontSize="sm">
       {links.map((link) =>
         router.asPath === link.path ? (
           <BreadcrumbItem key={link.path} isCurrentPage>
-            <BreadcrumbLink {...link.breadcrumbLinkProps} _hover={{}} cursor="auto">
+            <BreadcrumbLink {...link.breadcrumbLinkProps} _active={{}} _hover={{}} cursor="auto">
               {shortenString(link.name, 35)}
             </BreadcrumbLink>
           </BreadcrumbItem>

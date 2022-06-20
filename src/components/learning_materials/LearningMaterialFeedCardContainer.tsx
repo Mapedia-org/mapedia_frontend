@@ -1,4 +1,15 @@
-import { Box, Center, Flex, Skeleton, Stack, Text, useBreakpointValue, Wrap, WrapItem } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Flex,
+  Skeleton,
+  Stack,
+  Text,
+  useBreakpoint,
+  useBreakpointValue,
+  Wrap,
+  WrapItem,
+} from '@chakra-ui/react';
 import React, { forwardRef, ReactNode } from 'react';
 import { LearningMaterialWithCoveredTopicsDataFragment } from '../../graphql/learning_materials/learning_materials.fragments.generated';
 import { LearningPathFeedCardDataFragment } from '../../graphql/learning_paths/learning_paths.fragments.generated';
@@ -46,10 +57,12 @@ export const LearningMaterialFeedCardContainer = forwardRef<HTMLDivElement, Lear
       base: 'mobile',
       md: 'desktop',
     });
+    const breakpoint = useBreakpoint('lg');
     const layout = responsiveLayout || 'desktop'; // sometimes responsiveLayout is undefined ?
     return (
       <Flex
         ref={ref}
+        position="relative"
         boxShadow="sm"
         minH={{ base: '220px', md: '160px' }}
         py="3px"
@@ -107,30 +120,29 @@ export const LearningMaterialFeedCardContainer = forwardRef<HTMLDivElement, Lear
             </Center>
           </Flex>
           <Flex flexGrow={1} />
-          <Flex direction="row" alignItems="stretch" mt="3px">
+          <Flex direction="row" alignItems="stretch" mt="3px" justifyContent="space-between">
             {layout === 'mobile' && (
               <BoxBlockDefaultClickPropagation display="flex" justifyContent="center" alignItems="center" pb="2px">
                 <LearningMaterialRecommendationsViewer
                   learningMaterial={learningMaterial}
                   isLoading={isLoading}
                   display="horizontal"
-                  size="sm"
+                  size={breakpoint === 'sm' ? 'sm' : 'xs'}
                 />
               </BoxBlockDefaultClickPropagation>
             )}
             <Flex
-              alignItems="center"
-              flexGrow={1}
-              justifyContent="space-between"
+              alignItems="flex-end"
+              justifyContent="flex-end"
               my="3px"
-              flexWrap="wrap"
+              direction={{ base: 'column', sm: 'row' }}
               ml={layout === 'mobile' ? '3px' : 0}
             >
               {renderBottomLeft || (
-                <LearningMaterialFeedCardBottomLeftBar learningMaterial={learningMaterial} isLoading={isLoading} />
+                <LearningMaterialFeedCardTagBar learningMaterial={learningMaterial} isLoading={isLoading} />
               )}
               {renderBottomRight || (
-                <LearningMaterialFeedCardBottomRightBar
+                <LearningMaterialFeedCardTopicsBar
                   learningMaterial={learningMaterial}
                   isLoading={isLoading}
                   view={layout === 'mobile' ? 'compact' : 'expanded'}
@@ -139,30 +151,37 @@ export const LearningMaterialFeedCardContainer = forwardRef<HTMLDivElement, Lear
             </Flex>
           </Flex>
         </Flex>
-        <Flex ml="6px" alignItems="center" justifyContent="flex-end">
-          <BoxBlockDefaultClickPropagation>
-            <Stack px="2px" alignItems="center">
-              {interactionButtons.map((iteractionButton, idx) => (
-                <Box key={idx}>{iteractionButton}</Box>
-              ))}
-            </Stack>
-          </BoxBlockDefaultClickPropagation>
-        </Flex>
+
+        <BoxBlockDefaultClickPropagation
+          position="absolute"
+          right={0}
+          backgroundColor="white"
+          top="50%"
+          zIndex={2}
+          transform="translate(0,-50%)"
+        >
+          <Stack px="2px" alignItems="center">
+            {interactionButtons.map((iteractionButton, idx) => (
+              <Box key={idx}>{iteractionButton}</Box>
+            ))}
+          </Stack>
+        </BoxBlockDefaultClickPropagation>
       </Flex>
     );
   }
 );
 
-export const LearningMaterialFeedCardBottomLeftBar: React.FC<{
+export const LearningMaterialFeedCardTagBar: React.FC<{
   learningMaterial: ResourceFeedCardDataFragment | LearningPathFeedCardDataFragment;
   isLoading?: boolean;
 }> = ({ learningMaterial, isLoading }) => {
+  const size: 'xs' | 'sm' = useBreakpointValue({ base: 'xs', sm: 'sm' }) || 'sm';
   return learningMaterial.tags ? (
     <Skeleton isLoaded={!isLoading}>
-      <Wrap direction="row">
+      <Wrap direction="row" spacing={size === 'xs' ? 1 : 2}>
         {learningMaterial.tags.map((tag) => (
           <WrapItem key={tag.name}>
-            <LearningMaterialTagViewer tagName={tag.name} size="sm" />
+            <LearningMaterialTagViewer tagName={tag.name} size={size} />
           </WrapItem>
         ))}
       </Wrap>
@@ -172,7 +191,7 @@ export const LearningMaterialFeedCardBottomLeftBar: React.FC<{
 
 const MAX_COVERED_SUBTOPICS_DISPLAYED = 2;
 
-export const LearningMaterialFeedCardBottomRightBar: React.FC<{
+export const LearningMaterialFeedCardTopicsBar: React.FC<{
   learningMaterial: ResourceFeedCardDataFragment | LearningPathFeedCardDataFragment;
   isLoading?: boolean;
   view?: 'expanded' | 'compact';
@@ -222,6 +241,7 @@ export const LearningMaterialCardCoveredSubTopicsViewer: React.FC<{
   isLoading?: boolean;
   view?: 'expanded' | 'compact';
 }> = ({ learningMaterial, isLoading, view = 'expanded' }) => {
+  const size = useBreakpointValue({ base: 'xs', sm: 'md' }, 'md');
   const renderPopover = (renderTrigger: ReactNode) =>
     learningMaterial.coveredSubTopics?.items.length ? (
       <PopHover renderTrigger={renderTrigger} title="Covered SubTopics" maxW="360px" minW="320px" colorScheme="blue">
@@ -239,7 +259,7 @@ export const LearningMaterialCardCoveredSubTopicsViewer: React.FC<{
     <Skeleton isLoaded={!isLoading}>
       {view === 'expanded' ? (
         <Stack direction="row" flexWrap="wrap">
-          <Text fontSize="sm" fontWeight={600} color="gray.600" whiteSpace="nowrap">
+          <Text fontSize={size === 'md' ? 'sm' : 'xs'} fontWeight={600} color="gray.600" whiteSpace="nowrap">
             Covered SubTopics:
           </Text>
           <Wrap direction="row" spacing={1} alignItems="baseline">
@@ -261,7 +281,7 @@ export const LearningMaterialCardCoveredSubTopicsViewer: React.FC<{
         </Stack>
       ) : (
         renderPopover(
-          <Text fontSize="sm" fontWeight={600} color="gray.600" whiteSpace="nowrap">
+          <Text fontSize={size === 'md' ? 'sm' : 'xs'} fontWeight={600} color="gray.600" whiteSpace="nowrap">
             {learningMaterial.coveredSubTopics.items.length} Covered SubTopics
           </Text>
         )

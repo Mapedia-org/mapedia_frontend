@@ -290,15 +290,16 @@ export const TopicPage: React.FC<{ topicKey: string }> = ({ topicKey }) => {
           <SeeAlso topic={topic} />
         </Stack>
       </Flex>
-      {/* <Flex direction="column" alignItems="stretch" pt={20}>
+      <Flex direction="column" alignItems="stretch" pt={20}>
         <Discussion
+          title="Ask a Question"
           discussionLocation={DiscussionLocation.TopicPage}
           discussionEntityId={topic._id}
           commentResults={topic.comments || undefined}
           refetch={() => refetch()}
           isLoading={loading}
         />
-      </Flex> */}
+      </Flex>
     </TopicPageLayout>
   );
 };

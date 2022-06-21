@@ -256,6 +256,7 @@ export const ResourcePage: React.FC<{ resourceKey: string }> = ({ resourceKey })
       </Flex>
       <Flex px={layout === 'desktop' ? columnsWidth : 4} direction="column" alignItems="stretch" mt={10}>
         <Discussion
+          title="Comments"
           discussionLocation={DiscussionLocation.LearningMaterialPage}
           discussionEntityId={resource._id}
           commentResults={resource.comments || undefined}

@@ -46,6 +46,7 @@ export const postComment = gql`
 `;
 
 interface DiscussionProps {
+  title?: string;
   discussionLocation: DiscussionLocation;
   discussionEntityId: string;
   commentResults?: DiscussionDataFragment;
@@ -54,6 +55,7 @@ interface DiscussionProps {
 }
 
 export const Discussion: React.FC<DiscussionProps> = ({
+  title = 'Discuss',
   discussionLocation,
   discussionEntityId,
   commentResults,
@@ -69,7 +71,7 @@ export const Discussion: React.FC<DiscussionProps> = ({
   return (
     <Flex direction="column">
       <Heading color="gray.700" mb={10}>
-        Discuss
+        {title}
       </Heading>
       <Stack direction="column" mx={4} alignItems="stretch">
         <Flex direction="column" alignItems="stretch" px={{ base: 2, xl: '10%' }}>

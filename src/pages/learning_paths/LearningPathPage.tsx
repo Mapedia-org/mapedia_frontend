@@ -431,6 +431,7 @@ export const LearningPathPage: React.FC<{ learningPathKey: string }> = ({ learni
         </Flex>
         <Flex direction="column" alignItems="stretch" pt={20}>
           <Discussion
+            title="Comments"
             discussionLocation={DiscussionLocation.LearningMaterialPage}
             discussionEntityId={learningPath._id}
             commentResults={learningPath.comments || undefined}

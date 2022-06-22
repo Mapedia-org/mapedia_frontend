@@ -1,4 +1,5 @@
 import { Flex, Link, Stack, Text } from '@chakra-ui/layout';
+import { FaDiscord } from '@react-icons/all-files/fa/FaDiscord';
 import { FaDiscourse } from '@react-icons/all-files/fa/FaDiscourse';
 import { RiGithubFill } from '@react-icons/all-files/ri/RiGithubFill';
 import { RiTwitterLine } from '@react-icons/all-files/ri/RiTwitterLine';
@@ -25,6 +26,12 @@ export const Footer: React.FC<{}> = () => {
         <Flex direction="row" alignItems="stretch" justifyContent="space-between" w="65%">
           <Flex justifyContent="center" flexGrow={1} fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}>
             <Stack spacing={2} mr={3}>
+              <Link href={env.DISCORD_INVITE_LINK} _hover={{}} fontWeight={500} isExternal>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <FaDiscord />
+                  <Text>Discord</Text>
+                </Stack>
+              </Link>
               <Link href="https://github.com/Mapedia-org" _hover={{}} fontWeight={500} isExternal>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <RiGithubFill />

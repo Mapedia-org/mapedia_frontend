@@ -1,4 +1,4 @@
-import { BoxProps } from '@chakra-ui/react';
+import { BoxProps, Tooltip } from '@chakra-ui/react';
 import { forwardRef } from 'react';
 import { useCurrentUser } from '../../graphql/users/users.hooks';
 import { useUnauthentificatedModal } from '../auth/UnauthentificatedModal';
@@ -36,24 +36,31 @@ export const LearningMaterialRecommendButton = forwardRef<
     const { onOpen: onOpenUnauthentificatedModal } = useUnauthentificatedModal();
 
     return (
-      <LearningMaterialRecommendationsCountHeart
-        recommendationsCount={recommendationsTotalCount}
-        heartColor={isDisabled ? disabledHeartColor : isRecommended ? isRecommendedColor : neutralHeartColor}
-        {...(!isDisabled && {
-          hoverHeartColor: isRecommended ? neutralHeartColor : isRecommendedColor,
-        })}
-        countColor={isDisabled ? disabledHeartColor : 'gray.700'}
-        size={size}
-        isLoading={isLoading}
-        onClick={() => {
-          if (!isDisabled) {
-            if (!currentUser) onOpenUnauthentificatedModal();
-            else recommendLearningMaterialMutation();
-          }
-        }}
-        {...(isDisabled && { cursor: 'not-allowed' })}
-        {...props}
-      />
+      <Tooltip
+        openDelay={500}
+        aria-label={isDisabled ? '' : isRecommended ? 'unrecommend' : 'recommend'}
+        label={isDisabled ? '' : isRecommended ? 'Stop Recommending' : 'Recommend'}
+        placement="top"
+      >
+        <LearningMaterialRecommendationsCountHeart
+          recommendationsCount={recommendationsTotalCount}
+          heartColor={isDisabled ? disabledHeartColor : isRecommended ? isRecommendedColor : neutralHeartColor}
+          {...(!isDisabled && {
+            hoverHeartColor: isRecommended ? neutralHeartColor : isRecommendedColor,
+          })}
+          countColor={isDisabled ? disabledHeartColor : 'gray.700'}
+          size={size}
+          isLoading={isLoading}
+          onClick={() => {
+            if (!isDisabled) {
+              if (!currentUser) onOpenUnauthentificatedModal();
+              else recommendLearningMaterialMutation();
+            }
+          }}
+          {...(isDisabled && { cursor: 'not-allowed' })}
+          {...props}
+        />
+      </Tooltip>
     );
   }
 );

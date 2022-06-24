@@ -208,10 +208,10 @@ export const ExploreMap: React.FC<ExploreMapProps> = ({
               <ExploreMapBreadcrumbs topic={loadedTopic} onSelect={(topicId) => setSelectedTopicId(topicId)} />
               <RoleAccess accessRule="loggedInUser">
                 <NewTopicModal
-                  parentTopic={loadedTopic}
+                  parentTopic={loadedTopic?._id !== rootTopic._id ? loadedTopic : undefined}
                   renderButton={(openModal) => (
                     <Button colorScheme="blue" size="xs" variant="outline" onClick={() => openModal()}>
-                      + Add SubTopic
+                      + Add {loadedTopic?._id === rootTopic._id ? 'Topic' : 'SubTopic'}
                     </Button>
                   )}
                 />

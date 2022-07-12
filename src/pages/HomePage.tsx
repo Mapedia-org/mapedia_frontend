@@ -19,7 +19,9 @@ import { Accordeon } from '../components/lib/Accordeon';
 import { InternalButtonLink } from '../components/navigation/InternalLink';
 import { GlobalSearchBox } from '../components/navigation/search/GlobalSearchBox';
 import { ResourceMiniCardData } from '../components/resources/ResourceMiniCard';
+import { NewsletterSignup } from '../components/social/NewsletterSignup';
 import { ExploreMapProps } from '../components/topics/map/ExploreMap';
+import { MapType } from '../components/topics/map/MapHeader';
 import { useCurrentUser } from '../graphql/users/users.hooks';
 import { HomeLearningPathsRecommendations } from './home/HomeLearningPathsRecommendations';
 import { HomeTopicsRecommendations } from './home/HomeTopicsRecommendations';
@@ -27,13 +29,14 @@ import { HomeUserResourcesHistory } from './home/HomeUserResourcesHistory';
 import { HomeUserStartedPaths, StartedLearningPathCardData } from './home/HomeUserStartedPaths';
 import { GetHomePageDataQuery, useGetHomePageDataQuery } from './HomePage.generated';
 
-// import('../components/topics/ExploreMap').then(
-//   (res) => {
-//     const { ExploreMap } = res;
-//     return ExploreMap;
-//   },
-//   { ssr: false }
-// );
+const ExploreMap = dynamic<ExploreMapProps>(
+  () =>
+    import('../components/topics/map/ExploreMap').then((res) => {
+      const { ExploreMap } = res;
+      return ExploreMap;
+    }),
+  { ssr: false }
+);
 
 export const getHomePageData = gql`
   query getHomePageData {
@@ -82,11 +85,11 @@ export const HomePage: React.FC = () => {
     maxW: { lg: '2000px' },
   };
 
-  const mapProps = useBreakpointValue<{ direction: 'column' | 'row'; mapPxWidth: number; mapPxHeight: number }>({
-    base: { direction: 'column', mapPxWidth: 340, mapPxHeight: 400 },
-    sm: { direction: 'column', mapPxWidth: 420, mapPxHeight: 400 },
-    md: { direction: 'row', mapPxWidth: 400, mapPxHeight: 300 },
-    lg: { direction: 'row', mapPxWidth: 590, mapPxHeight: 360 },
+  const mapOptions = useBreakpointValue<{ direction: 'column' | 'row'; mapPxWidth: number; mapPxHeight: number }>({
+    base: { direction: 'column', mapPxWidth: 320, mapPxHeight: (320 * 9) / 16 },
+    sm: { direction: 'column', mapPxWidth: 480, mapPxHeight: (480 * 9) / 16 },
+    md: { direction: 'column', mapPxWidth: 660, mapPxHeight: 400 },
+    lg: { direction: 'column', mapPxWidth: 900, mapPxHeight: 460 },
   });
 
   return (
@@ -101,10 +104,14 @@ export const HomePage: React.FC = () => {
 
       <Flex {...outerLayoutProps} pt={20} pb={4}>
         <Flex w="100%" direction="column" alignItems="stretch">
-          {/* <ExploreMap
-            {...(mapProps || { direction: 'column', mapPxWidth: 400, mapPxHeight: 360 })}
-            mapContainerProps={{ borderWidth: 1, borderColor: 'gray.500' }}
-          /> */}
+          <Center>
+            <ExploreMap
+              options={mapOptions || { direction: 'column', mapPxHeight: (400 * 9) / 16, mapPxWidth: 400 }}
+              selectedTopicId={'AvgsEAdEM'}
+              selectedMapType={MapType.CONCEPTS}
+              mapContainerProps={{ borderWidth: 1, borderColor: 'gray.500' }}
+            />
+          </Center>
         </Flex>
       </Flex>
 
@@ -278,6 +285,9 @@ export const HomePage: React.FC = () => {
             </InternalButtonLink>
           )}
         </Stack>
+      </Flex>
+      <Flex {...outerLayoutProps}>
+        <NewsletterSignup />
       </Flex>
       {!isReturningUser && <SearchBox leftTopoStainPosition="top" layoutProps={outerLayoutProps} />}
       <Box h={32} />

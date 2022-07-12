@@ -147,6 +147,33 @@ export const theme = extendTheme({
         endColor: 'gray.400',
       },
     },
+    Button: {
+      sizes: {
+        xl: {
+          h: '60px',
+          fontSize: 'xl',
+          px: '32px',
+        },
+      },
+    },
+    Input: {
+      sizes: {
+        xl: {
+          field: {
+            fontSize: 'xl',
+            px: 5,
+            h: '60px',
+            borderRadius: 'lg',
+          },
+          addon: {
+            fontSize: 'xl',
+            px: 6,
+            h: '60px',
+            borderRadius: 'lg',
+          },
+        },
+      },
+    },
   },
 });
 

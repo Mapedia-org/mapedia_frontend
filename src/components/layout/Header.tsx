@@ -168,13 +168,7 @@ export const Header: React.FC = () => {
         _focus={{}}
         _hover={{ color: 'brand.800' }}
       >
-        Mapedia.org{' '}
-        <Text as="span" color="gray.500">
-          -
-        </Text>{' '}
-        <Text as="span" color="red.400" fontWeight={600}>
-          Beta
-        </Text>
+        Mapedia.org
       </InternalLink>
       <Box flexGrow={1} />
       <Stack direction="row" spacing={4} alignItems="center">

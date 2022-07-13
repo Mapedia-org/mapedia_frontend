@@ -39,12 +39,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ children, apolloClient }) => {
               }
             `}
           </style>
-          <script
-            async
-            defer
-            data-domain="beta.mapedia.org"
-            src="https://analytics.sci-map.org/js/plausible.js"
-          ></script>
+          <script async defer data-domain="mapedia.org" src="https://analytics.sci-map.org/js/plausible.js"></script>
           {/* <link
           href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700&subset=latin,latin-ext"
           rel="stylesheet"

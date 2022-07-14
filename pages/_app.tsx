@@ -10,6 +10,25 @@ import { Wrapper } from '../src/components/Wrapper';
 import { withApollo } from '../src/hoc/withApollo';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
+if (typeof window !== 'undefined') {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (const registration of registrations) {
+        registration.unregister();
+      }
+    });
+
+    // clear cache of service worker
+    caches.keys().then((keyList) => {
+      return Promise.all(
+        keyList.map((key) => {
+          return caches.delete(key);
+        })
+      );
+    });
+  }
+}
+
 interface AppProps {
   apolloClient: ApolloClient<NormalizedCacheObject>;
 }

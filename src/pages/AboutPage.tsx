@@ -42,6 +42,11 @@ export const articlesMenuItems: ArticleMenuItem[] = [
     menuTitle: 'Team',
     key: 'team',
   },
+
+  {
+    menuTitle: 'Manifesto',
+    key: 'manifesto',
+  },
   {
     menuTitle: 'How to contribute',
     key: 'contributing',

@@ -182,12 +182,11 @@ export const NewLearningPathPageInfo: PageInfo = {
   routePath: NewLearningPathPagePath,
 };
 
-export const LearningPathPagePath = (learningPathKey: string = '[learningPathKey]') =>
-  `/learning_paths/${learningPathKey}`;
+export const LearningPathPagePath = (learningPathKey: string) => `/learning_paths/${learningPathKey}`;
 export const LearningPathPageInfo = (learningPath: Pick<LearningPathDataFragment, 'key' | 'name'>): PageInfo => ({
   name: learningPath.name,
   path: LearningPathPagePath(learningPath.key),
-  routePath: LearningPathPagePath(),
+  routePath: LearningPathPagePath('[learningPathKey]'),
 });
 
 //====Auth====

@@ -221,8 +221,8 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
           isInvalid={!!formErrors.topicTypes && showFormErrors}
         />
 
-        <Flex justifyContent="space-between" flexDir="row">
-          <Box w="45%">
+        <Flex justifyContent="space-between" flexDir={{ base: 'column', sm: 'row' }}>
+          <Box w={{ sm: '45%' }} mb={{ base: 12, sm: 0 }}>
             <CollapsedField
               label="Customize URL"
               alignLabel="left"
@@ -241,7 +241,7 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({
               />
             </CollapsedField>
           </Box>
-          <Box w="45%">
+          <Box w={{ sm: '45%' }}>
             <CollapsedField
               label="Select Prerequisites"
               alignLabel="left"

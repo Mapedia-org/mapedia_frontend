@@ -11,6 +11,7 @@ import {
   Text,
   Textarea,
   TextProps,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import gql from 'graphql-tag';
 import { debounce } from 'lodash';
@@ -131,7 +132,7 @@ export const TopicDescriptionField: React.FC<{
   w,
 }) => {
   const [pulledDescriptions, setPulledDescriptions] = useState<PulledDescription[]>();
-
+  const layout = useBreakpointValue({ base: 'mobile', md: 'desktop' }, 'md') || 'desktop';
   const errorToast = useErrorToast();
   const [pullTopicDescriptionsLazyQuery, { loading }] = usePullTopicDescriptionsLazyQuery({
     onCompleted(data) {
@@ -148,29 +149,31 @@ export const TopicDescriptionField: React.FC<{
       isInvalid={isInvalid}
       renderTopRight={
         pullDescriptionsQueryData && (
-          <Button
-            colorScheme="teal"
-            isDisabled={!pullDescriptionsQueryData.name}
-            size="sm"
-            isLoading={loading}
-            loadingText="Pulling Descriptions..."
-            onClick={async () =>
-              pullTopicDescriptionsLazyQuery({
-                variables: {
-                  queryOptions: {
-                    name: pullDescriptionsQueryData.name,
+          <Center>
+            <Button
+              colorScheme="teal"
+              isDisabled={!pullDescriptionsQueryData.name}
+              size={layout === 'desktop' ? 'sm' : 'xs'}
+              isLoading={loading}
+              loadingText="Pulling Descriptions..."
+              onClick={async () =>
+                pullTopicDescriptionsLazyQuery({
+                  variables: {
+                    queryOptions: {
+                      name: pullDescriptionsQueryData.name,
+                    },
                   },
-                },
-              })
-            }
-          >
-            Pull Descriptions from Wikipedia
-          </Button>
+                })
+              }
+            >
+              {layout === 'desktop' ? 'Pull Descriptions from Wikipedia' : 'Pull from Wikipedia'}
+            </Button>
+          </Center>
         )
       }
     >
-      <Flex direction="row" justifyContent="space-between" alignItems="stretch">
-        <FormControl {...(pulledDescriptions && { w: '50%' })}>
+      <Flex direction={layout === 'desktop' ? 'row' : 'column'} justifyContent="space-between" alignItems="stretch">
+        <FormControl {...(pulledDescriptions && layout === 'desktop' && { w: '50%' })}>
           <Textarea
             placeholder={placeholder}
             minH="260px"
@@ -185,7 +188,7 @@ export const TopicDescriptionField: React.FC<{
           </FormHelperText>
         </FormControl>
         {pulledDescriptions && (
-          <Flex flexGrow={0} w="46%">
+          <Flex flexGrow={0} {...(layout === 'desktop' && { w: '46%' })}>
             {!pulledDescriptions.length && (
               <Center display="flex" flexDir="column" minW="100%" py={16}>
                 <Heading size="lg" color="gray.600">

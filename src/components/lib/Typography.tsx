@@ -1,5 +1,5 @@
 import { Heading, HeadingProps, LinkProps, Text, TextProps } from '@chakra-ui/layout';
-import { useBreakpointValue } from '@chakra-ui/react';
+import { Tooltip, useBreakpointValue } from '@chakra-ui/react';
 import { TopicLinkDataFragment } from '../../graphql/topics/topics.fragments.generated';
 import { TopicPageInfo } from '../../pages/RoutesPageInfos';
 import { PageLink } from '../navigation/InternalLink';
@@ -81,37 +81,42 @@ export const EditLinkStyleProps: Pick<LinkProps, 'color' | 'fontSize'> = {
   fontSize: 'sm',
 };
 
-export const ShowedInTopicHeadingStyleProps = (
+export const ShowedInTopicLinkStyleProps = (
   size: 'sm' | 'md'
-): Pick<LinkProps, 'color' | 'fontSize' | 'fontWeight'> => ({
-  color: 'gray.400',
-  fontSize: { sm: '16px', md: '19px' }[size],
+): { [key in 'topicName' | 'contextName']: Pick<LinkProps, 'color' | 'fontSize' | 'fontWeight' | 'lineHeight'> } => ({
+  topicName: {
+    color: 'gray.600',
+    fontSize: { sm: '14px', md: '17px' }[size],
+    fontWeight: 800,
+  },
+  contextName: {
+    color: 'gray.500',
+    fontWeight: 800,
+    fontSize: { sm: '12px', md: '15px' }[size],
+  },
 });
 
-export const ShowedInTopicHeading: React.FC<HeadingProps & { size?: 'sm' | 'md' }> = ({
-  children,
-  size = 'md',
-  ...props
-}) => {
-  return (
-    <Heading {...ShowedInTopicHeadingStyleProps(size)} {...props}>
-      {children}
-    </Heading>
-  );
-};
-
-export const ShowedInTopicLink: React.FC<{ topic: TopicLinkDataFragment; size?: 'sm' | 'md' } & HeadingProps> = ({
+export const ShowedInTopicLink: React.FC<{ topic: TopicLinkDataFragment; size?: 'sm' | 'md' }> = ({
   topic,
-  children,
   size = 'md',
-  ...props
 }) => {
   return (
-    <PageLink pageInfo={TopicPageInfo(topic)} _hover={{}}>
-      <ShowedInTopicHeading _hover={{ color: 'gray.500' }} transition="color ease-in 0.2s" size={size} {...props}>
-        {children || topic.name}
-      </ShowedInTopicHeading>
-    </PageLink>
+    <Tooltip label={`${topic.name}${topic.context ? ' (' + topic.context + ')' : ''}`} openDelay={1000}>
+      <PageLink
+        pageInfo={TopicPageInfo(topic)}
+        {...ShowedInTopicLinkStyleProps(size).topicName}
+        transition="opacity ease-in 0.2s"
+        opacity={0.8}
+        _hover={{ opacity: 1 }}
+      >
+        {topic.name}{' '}
+        {topic.context && (
+          <Text as="span" {...ShowedInTopicLinkStyleProps(size).contextName} transition="color ease-in 0.2s">
+            ({topic.context})
+          </Text>
+        )}
+      </PageLink>
+    </Tooltip>
   );
 };
 

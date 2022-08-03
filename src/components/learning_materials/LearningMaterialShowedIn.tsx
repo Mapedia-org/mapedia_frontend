@@ -20,10 +20,10 @@ export const LearningMaterialShowedIn: React.FC<{
 }> = ({ learningMaterial, isLoading, size }) => {
   return learningMaterial.showedIn?.length ? (
     <Flex direction="column">
-      <Text fontWeight={700} color="gray.600" fontSize={size}>
+      <Text fontWeight={700} color="gray.700" fontSize={{ sm: '16px', md: '19px' }[size]}>
         Shown In
       </Text>
-      <Stack ml={3}>
+      <Stack ml={2} spacing={0} mt={1}>
         {learningMaterial.showedIn.map((showedInTopic) => (
           <ShowedInTopicLink key={showedInTopic._id} topic={showedInTopic} size={size} />
         ))}

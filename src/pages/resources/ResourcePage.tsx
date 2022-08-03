@@ -359,7 +359,6 @@ const HeaderBlock: React.FC<{
     },
     'md'
   );
-  console.log(titleFontSize);
   return (
     <Stack
       alignItems="center"

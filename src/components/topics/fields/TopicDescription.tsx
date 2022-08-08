@@ -172,7 +172,11 @@ export const TopicDescriptionField: React.FC<{
         )
       }
     >
-      <Flex direction={layout === 'desktop' ? 'row' : 'column'} justifyContent="space-between" alignItems="stretch">
+      <Flex
+        direction={layout === 'desktop' ? 'row' : 'column-reverse'}
+        justifyContent="space-between"
+        alignItems="stretch"
+      >
         <FormControl {...(pulledDescriptions && layout === 'desktop' && { w: '50%' })}>
           <Textarea
             placeholder={placeholder}
@@ -188,7 +192,7 @@ export const TopicDescriptionField: React.FC<{
           </FormHelperText>
         </FormControl>
         {pulledDescriptions && (
-          <Flex flexGrow={0} {...(layout === 'desktop' && { w: '46%' })}>
+          <Flex flexGrow={0} {...(layout === 'desktop' ? { w: '46%' } : { mb: 4 })}>
             {!pulledDescriptions.length && (
               <Center display="flex" flexDir="column" minW="100%" py={16}>
                 <Heading size="lg" color="gray.600">

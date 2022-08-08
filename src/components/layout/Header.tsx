@@ -117,7 +117,7 @@ export const Header: React.FC = () => {
                   {currentUser.startedLearningPaths.map(({ learningPath }) => (
                     <InternalLink
                       key={learningPath._id}
-                      routePath={LearningPathPagePath()}
+                      routePath={LearningPathPagePath(learningPath.key)}
                       asHref={LearningPathPagePath(learningPath.key)}
                       {...HeaderLinkStyle}
                       fontSize="md"

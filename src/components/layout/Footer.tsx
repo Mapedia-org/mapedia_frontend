@@ -44,12 +44,6 @@ export const Footer: React.FC<{}> = () => {
                   <Text>Twitter</Text>
                 </Stack>
               </Link>
-              <Link href={env.DISCOURSE_FORUM_URL} _hover={{}} fontWeight={500} isExternal>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <FaDiscourse />
-                  <Text>Forum</Text>
-                </Stack>
-              </Link>
             </Stack>
           </Flex>
           <Stack direction="row" spacing={{ base: 2, sm: 5, md: 12 }} fontSize={{ base: 'xs', sm: 'sm', md: 'md' }}>
@@ -63,10 +57,10 @@ export const Footer: React.FC<{}> = () => {
               </Link>
             </Stack>
             <Stack direction="column" spacing={2} alignItems="center" textAlign="center">
-              <Link href="https://discord.gg/TVqaaVqeMU" isExternal>
+              <Link href={env.DISCORD_INVITE_LINK} isExternal>
                 Report a bug
               </Link>
-              <Link href="https://discord.gg/TVqaaVqeMU" isExternal>
+              <Link href={env.DISCORD_INVITE_LINK} isExternal>
                 Suggest a feature
               </Link>
               <Link href="/about/contributing" isExternal>

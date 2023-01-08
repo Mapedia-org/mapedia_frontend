@@ -63,10 +63,10 @@ export const Footer: React.FC<{}> = () => {
               </Link>
             </Stack>
             <Stack direction="column" spacing={2} alignItems="center" textAlign="center">
-              <Link href="https://forum.mapedia.org/c/tech/bugs/8" isExternal>
+              <Link href="https://discord.gg/TVqaaVqeMU" isExternal>
                 Report a bug
               </Link>
-              <Link href="https://forum.mapedia.org/c/tech/feature-requests/9" isExternal>
+              <Link href="https://discord.gg/TVqaaVqeMU" isExternal>
                 Suggest a feature
               </Link>
               <Link href="/about/contributing" isExternal>

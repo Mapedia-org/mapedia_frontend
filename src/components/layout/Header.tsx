@@ -73,11 +73,6 @@ export const Header: React.FC = () => {
       name: 'About',
     },
     {
-      href: env.DISCOURSE_FORUM_URL,
-      external: true,
-      name: 'Forum',
-    },
-    {
       routePath: '/register',
       asHref: '/register',
       name: 'Register',
